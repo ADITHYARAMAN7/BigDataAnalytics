@@ -1,0 +1,2194 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Big Data Exam Notes</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one reading column of study notes; sticky topic bar; code block + output block always paired */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#17202B; --muted:#596472; --line:#D9DEE6;
+  --accent:#1C5CA6; --accent-soft:#E2EBF7;
+  --code-bg:#1C232E; --code-fg:#E7EBF1; --code-dim:#93A0B2;
+  --out-bg:#EAF4EA; --out-fg:#1D3A21; --out-line:#B9D9BC;
+  --tip-bg:#FFF5D1; --tip-line:#D8A800;
+  --warn-bg:#FCEBE9; --warn-line:#C4463B;
+  --def-bg:#EEF2FA;
+  --f-display:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body:"IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#11151B; --surface:#181E27; --ink:#E3E8EF; --muted:#9AA6B5; --line:#29323E;
+  --accent:#86B6EE; --accent-soft:#1D2A3B;
+  --code-bg:#0C1016; --code-fg:#E7EBF1; --code-dim:#7F8B9C;
+  --out-bg:#142419; --out-fg:#BFE5C5; --out-line:#24452C;
+  --tip-bg:#2C2610; --tip-line:#D8B23C;
+  --warn-bg:#331A1A; --warn-line:#E4837A;
+  --def-bg:#1A2230; color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --bg:#11151B; --surface:#181E27; --ink:#E3E8EF; --muted:#9AA6B5; --line:#29323E;
+  --accent:#86B6EE; --accent-soft:#1D2A3B;
+  --code-bg:#0C1016; --code-fg:#E7EBF1; --code-dim:#7F8B9C;
+  --out-bg:#142419; --out-fg:#BFE5C5; --out-line:#24452C;
+  --tip-bg:#2C2610; --tip-line:#D8B23C;
+  --warn-bg:#331A1A; --warn-line:#E4837A;
+  --def-bg:#1A2230; color-scheme:dark; }
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:64px}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+body{background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:16px; line-height:1.6;}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:10; background:var(--surface)}
+.wrap{max-width:860px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px)); padding-block:0 64px}
+
+/* top bar */
+.topbar{position:sticky; top:env(safe-area-inset-top,0px); z-index:5; background:var(--surface); border-bottom:1px solid var(--line)}
+.topbar-in{max-width:860px; margin:0 auto; display:flex; gap:10px; align-items:center; padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px)); padding-block:8px}
+.chips{display:flex; gap:6px; overflow-x:auto; flex:1; min-width:0; scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips a{flex:none; font:600 13px/1 var(--f-body); color:var(--ink); text-decoration:none; padding:8px 11px; border:1px solid var(--line); border-radius:999px; background:var(--bg)}
+.chips a:hover,.chips a:focus-visible{border-color:var(--accent); color:var(--accent); outline:none}
+.quizbtn{flex:none; font:600 13px/1 var(--f-body); padding:8px 11px; border-radius:8px; border:1px solid var(--accent); background:var(--accent-soft); color:var(--accent); cursor:pointer}
+.quizbtn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+/* hero */
+header.hero{padding-block:36px 8px}
+.eyebrow{font:600 12px/1.2 var(--f-body); letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+h1{font-family:var(--f-display); font-weight:800; font-size:clamp(30px,6vw,46px); line-height:1.05; letter-spacing:-.01em; margin:.3em 0 .35em; text-wrap:balance}
+.lede{color:var(--muted); max-width:62ch; margin:0}
+
+/* sections */
+section.unit{margin-top:44px; padding-top:8px; border-top:3px solid var(--ink)}
+.unit-head{display:flex; flex-wrap:wrap; gap:8px 14px; align-items:baseline; justify-content:space-between}
+h2{font-family:var(--f-display); font-weight:800; font-size:clamp(24px,4.6vw,32px); line-height:1.15; margin:.4em 0 .2em; text-wrap:balance}
+.qtype{font:600 12px/1 var(--f-body); letter-spacing:.06em; text-transform:uppercase; padding:6px 9px; border-radius:6px; background:var(--accent-soft); color:var(--accent)}
+h3{font-family:var(--f-display); font-weight:700; font-size:20px; margin:1.8em 0 .4em; text-wrap:balance}
+h4{font-weight:600; font-size:16px; margin:1.3em 0 .3em}
+p{margin:.55em 0; max-width:68ch}
+ul,ol{padding-left:1.25em; margin:.5em 0; max-width:68ch}
+li{margin:.25em 0}
+strong{font-weight:600}
+code{font-family:var(--f-mono); font-size:.88em; background:var(--accent-soft); padding:.08em .35em; border-radius:4px; overflow-wrap:anywhere}
+a{color:var(--accent)}
+
+/* boxes */
+.def,.tip,.warn{border-radius:8px; padding:12px 14px; margin:14px 0; max-width:72ch}
+.def{background:var(--def-bg); border:1px solid var(--line)}
+.def b.lbl,.tip b.lbl,.warn b.lbl{display:block; font:700 11px/1.2 var(--f-body); letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px}
+.def b.lbl{color:var(--accent)}
+.tip{background:var(--tip-bg); border-left:4px solid var(--tip-line)}
+.tip b.lbl{color:var(--ink)}
+.warn{background:var(--warn-bg); border-left:4px solid var(--warn-line)}
+.warn b.lbl{color:var(--warn-line)}
+.def p,.tip p,.warn p{margin:.3em 0}
+
+/* code + output */
+.pair{margin:14px 0 18px}
+.code,.out{position:relative; border-radius:8px; overflow:hidden}
+.code{background:var(--code-bg); color:var(--code-fg)}
+.out{background:var(--out-bg); color:var(--out-fg); border:1px solid var(--out-line); border-top:none; border-radius:0 0 8px 8px}
+.pair .code{border-radius:8px 8px 0 0}
+.code:only-child{border-radius:8px}
+.tag{display:block; font:600 10.5px/1 var(--f-body); letter-spacing:.09em; text-transform:uppercase; padding:8px 12px 0}
+.code .tag{color:var(--code-dim)}
+.out .tag{color:var(--out-fg); opacity:.75}
+pre{margin:0; padding:8px 12px 12px; overflow-x:auto; font-family:var(--f-mono); font-size:13px; line-height:1.55; tab-size:4}
+.code pre .c{color:var(--code-dim)}
+body.quiz .out pre{filter:blur(6px); cursor:pointer; user-select:none}
+body.quiz .out.shown pre{filter:none; user-select:auto}
+body.quiz .out .tag::after{content:" · tap to reveal"}
+body.quiz .out.shown .tag::after{content:""}
+
+/* tables */
+.tbl{overflow-x:auto; margin:12px 0; border:1px solid var(--line); border-radius:8px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:14px; min-width:460px}
+th,td{text-align:left; vertical-align:top; padding:8px 10px; border-bottom:1px solid var(--line)}
+th{font-weight:600; background:var(--accent-soft); color:var(--ink)}
+tr:last-child td{border-bottom:none}
+td code{white-space:nowrap}
+
+/* flow */
+.flow{display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:12px 0; font:600 13px/1.2 var(--f-body)}
+.flow span{padding:7px 10px; border-radius:6px; background:var(--surface); border:1px solid var(--line)}
+.flow i{font-style:normal; color:var(--muted)}
+
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin:12px 0}
+.grid2 > *{min-width:0}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:12px 14px}
+.card h4{margin-top:0}
+.small{font-size:14px; color:var(--muted)}
+.answer{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:4px 16px 12px; margin:16px 0}
+.answer h4{color:var(--accent)}
+.concl{background:var(--accent-soft); border-radius:8px; padding:10px 12px; margin-top:10px}
+.concl b{display:block; font:700 11px/1.2 var(--f-body); letter-spacing:.08em; text-transform:uppercase; color:var(--accent)}
+footer{margin-top:48px; color:var(--muted); font-size:13px}
+</style>
+
+<nav class="topbar" aria-label="Topics">
+  <div class="topbar-in">
+    <div class="chips">
+      <a href="#plan">Plan</a><a href="#hadoop">Hadoop</a><a href="#mapreduce">MapReduce</a><a href="#pig">Pig</a><a href="#nosql">NoSQL</a><a href="#hbase">HBase</a><a href="#scala">Scala</a><a href="#spark">Spark</a><a href="#analytic">Analytic Qs</a><a href="#lasthour">Last hour</a>
+    </div>
+    <button class="quizbtn" id="quizbtn" type="button" aria-pressed="false">Hide outputs</button>
+  </div>
+</nav>
+
+<div class="wrap">
+<header class="hero">
+  <div class="eyebrow">Big Data Analytics · L18–L27 + Hadoop &amp; MapReduce</div>
+  <h1>Big Data Exam Notes</h1>
+  <p class="lede">Built from your 10 slide decks, with Hadoop and MapReduce added from standard material. Every program has its output written below it. Use <strong>Hide outputs</strong> to test yourself: write the output first, then tap to check.</p>
+</header>
+
+<section class="unit" id="plan">
+  <div class="unit-head"><h2>How to score in this paper</h2><span class="qtype">Read first</span></div>
+  <div class="tbl"><table>
+    <tr><th>Topic</th><th>What they want</th><th>What to write</th></tr>
+    <tr><td>Hadoop, MapReduce</td><td>Understanding (Hive not included)</td><td>Definition, diagram, key-value flow at every stage, one worked trace</td></tr>
+    <tr><td>Pig, HBase, NoSQL, Scala</td><td>Code (Java API not required)</td><td>Code, then <strong>Output</strong> written under it, then one line explaining it</td></tr>
+    <tr><td>Spark</td><td>Theory + small PySpark program</td><td>Theory points, then code that uses transformations and an action, then output</td></tr>
+    <tr><td>Analytic questions</td><td>Apply the tools to a scenario</td><td>Use the 5-step template in <a href="#analytic">Analytic Qs</a>, ending with a <strong>Conclusion</strong></td></tr>
+  </table></div>
+  <div class="tip"><b class="lbl">Answer pattern for any code question</b>
+    <p>1. One-line definition of the operator or command. 2. Syntax. 3. Example on small sample data that you write down first. 4. <strong>Output</strong>. 5. One line on what happened. Writing the sample input yourself means the examiner can check your output.</p>
+  </div>
+  <div class="warn"><b class="lbl">Mistakes in the slides, so don't copy them</b>
+    <p>Pig equality is <code>==</code>, not <code>=</code> (slide: <code>FILTER deptdata BY state = 'LA'</code> is wrong). Pig's function is <code>COUNT_STAR</code>, not <code>COUNTSTAR</code>. In <code>FOREACH B GENERATE A.studname, MAX(A.marks)</code> use <code>group</code> instead of <code>A.studname</code>, or you get a bag of repeated names. The SPLIT slide uses <code>gpa&lt;=4.0</code>, which puts 4.0 rows in <em>both</em> relations. Write <code>gpa &lt; 4.0</code>.</p>
+  </div>
+</section>
+
+<!-- ========================= HADOOP ========================= -->
+<section class="unit" id="hadoop">
+  <div class="unit-head"><h2>Hadoop</h2><span class="qtype">Understanding</span></div>
+
+  <div class="def"><b class="lbl">Definition</b>
+    <p><strong>Apache Hadoop</strong> is an open-source framework for <strong>distributed storage</strong> (HDFS) and <strong>distributed processing</strong> (MapReduce) of very large data sets across clusters of cheap commodity machines. It was created by Doug Cutting, based on Google's GFS and MapReduce papers.</p>
+  </div>
+
+  <h3>Big Data: the 5 V's</h3>
+  <ul>
+    <li><strong>Volume</strong>: huge size (TB to PB).</li>
+    <li><strong>Velocity</strong>: data arrives fast (clicks, sensors, logs).</li>
+    <li><strong>Variety</strong>: structured (tables), semi-structured (JSON, XML), unstructured (text, video).</li>
+    <li><strong>Veracity</strong>: data may be noisy or uncertain.</li>
+    <li><strong>Value</strong>: useful insight extracted from the data.</li>
+  </ul>
+
+  <h3>Core components</h3>
+  <div class="tbl"><table>
+    <tr><th>Component</th><th>Role</th></tr>
+    <tr><td><strong>HDFS</strong></td><td>Storage layer. Splits files into blocks and stores replicas across DataNodes.</td></tr>
+    <tr><td><strong>YARN</strong></td><td>Resource management and job scheduling (Hadoop 2+).</td></tr>
+    <tr><td><strong>MapReduce</strong></td><td>Processing model: Map → Shuffle &amp; Sort → Reduce.</td></tr>
+    <tr><td><strong>Hadoop Common</strong></td><td>Shared Java libraries and utilities used by all modules.</td></tr>
+  </table></div>
+
+  <h3>HDFS architecture (master–slave)</h3>
+  <ul>
+    <li><strong>NameNode (master)</strong>: stores <em>metadata</em> only: file names, directory tree, file → block mapping, and which DataNode holds each block. It holds no actual data. It is a single point of failure in Hadoop 1; Hadoop 2 adds a Standby NameNode for High Availability.</li>
+    <li><strong>DataNode (slave)</strong>: stores the actual blocks, sends a <strong>heartbeat</strong> every 3 s and a <strong>block report</strong> to the NameNode, and serves read/write requests.</li>
+    <li><strong>Secondary NameNode</strong>: periodically merges <code>fsimage</code> + <code>edit log</code> (checkpointing). It is <strong>not</strong> a backup NameNode.</li>
+    <li><strong>Block size</strong>: 128 MB by default (64 MB in Hadoop 1). <strong>Replication factor</strong>: 3 by default.</li>
+    <li><strong>Rack awareness</strong>: 1st replica on the local node, 2nd and 3rd on a different rack, so the data survives a whole rack failing.</li>
+    <li>HDFS is <strong>write-once, read-many</strong>, built for large sequential reads.</li>
+  </ul>
+  <div class="tip"><b class="lbl">Worked numeric example (commonly asked)</b>
+    <p>A 500 MB file with 128 MB blocks gives 128 + 128 + 128 + 116 = <strong>4 blocks</strong>. With replication 3 that is <strong>12 block copies</strong>, using 1500 MB of raw storage. The last block only uses 116 MB, because HDFS does not pad it.</p>
+  </div>
+
+  <h4>HDFS write and read flow</h4>
+  <div class="flow"><span>Client asks NameNode</span><i>→</i><span>NameNode returns DataNode list</span><i>→</i><span>Client writes to DN1</span><i>→</i><span>DN1 → DN2 → DN3 pipeline</span><i>→</i><span>ACKs back</span></div>
+  <div class="flow"><span>Client asks NameNode for block locations</span><i>→</i><span>Reads each block from the nearest DataNode directly</span></div>
+
+  <h3>YARN (Yet Another Resource Negotiator)</h3>
+  <ul>
+    <li><strong>ResourceManager</strong> (master, one per cluster): contains the Scheduler, which allocates resources, and the ApplicationsManager, which accepts jobs.</li>
+    <li><strong>NodeManager</strong> (one per node): launches containers and reports their resource usage.</li>
+    <li><strong>ApplicationMaster</strong> (one per job): negotiates resources from the RM and tracks its job's tasks.</li>
+    <li><strong>Container</strong>: a bundle of CPU + memory in which a task runs.</li>
+  </ul>
+  <p class="small">Hadoop 1 had the <strong>JobTracker</strong> (master) and <strong>TaskTracker</strong> (slaves) doing both resource management and job tracking. YARN separated these so other engines like Spark can run on the same cluster.</p>
+
+  <h3>Key features</h3>
+  <ul>
+    <li><strong>Data locality</strong>: computation moves to where the data is, instead of moving the data.</li>
+    <li><strong>Fault tolerance</strong>: replication and automatic re-execution of failed tasks.</li>
+    <li><strong>Horizontal scalability</strong>: add more machines. <strong>Low cost</strong>: commodity hardware.</li>
+  </ul>
+
+  <h3>Limitations (why HBase and Spark exist)</h3>
+  <ul>
+    <li>Batch processing only. Data is accessed <strong>sequentially</strong>, so even a simple lookup scans the whole data set. <strong>HBase</strong> was built for random access.</li>
+    <li>MapReduce writes intermediate results to <strong>disk</strong>, which makes iterative jobs (ML, graphs) slow. <strong>Spark</strong> keeps data in memory.</li>
+    <li>Not real-time, and the <strong>small files problem</strong>: every file adds load to NameNode memory.</li>
+  </ul>
+
+  <h3>Hadoop ecosystem (one line each)</h3>
+  <div class="tbl"><table>
+    <tr><th>Tool</th><th>Purpose</th></tr>
+    <tr><td>Pig</td><td>Data-flow scripting (Pig Latin) compiled to MapReduce</td></tr>
+    <tr><td>Hive</td><td>SQL-like querying (HiveQL). Not in your exam</td></tr>
+    <tr><td>HBase</td><td>Column-oriented NoSQL DB on HDFS, random real-time read/write</td></tr>
+    <tr><td>Sqoop / Flume</td><td>Import from RDBMS / ingest streaming logs</td></tr>
+    <tr><td>ZooKeeper</td><td>Coordination service (used by HBase)</td></tr>
+    <tr><td>Oozie</td><td>Workflow scheduler</td></tr>
+    <tr><td>Spark</td><td>In-memory processing engine</td></tr>
+  </table></div>
+
+  <h4>Basic HDFS shell commands</h4>
+  <div class="pair"><div class="code"><span class="tag">HDFS shell</span><pre>hdfs dfs -mkdir /pigdemo                  <span class="c"># create directory</span>
+hdfs dfs -put student.tsv /pigdemo/       <span class="c"># local → HDFS</span>
+hdfs dfs -ls /pigdemo                     <span class="c"># list</span>
+hdfs dfs -cat /pigdemo/student.tsv        <span class="c"># print file</span>
+hdfs dfs -get /pigdemo/student.tsv .      <span class="c"># HDFS → local</span>
+hdfs dfs -rm /pigdemo/student.tsv         <span class="c"># delete</span></pre></div></div>
+</section>
+
+<!-- ========================= MAPREDUCE ========================= -->
+<section class="unit" id="mapreduce">
+  <div class="unit-head"><h2>MapReduce: key, value</h2><span class="qtype">Understanding</span></div>
+
+  <div class="def"><b class="lbl">Definition</b>
+    <p><strong>MapReduce</strong> is a programming model for processing large data in parallel. Everything is a <strong>(key, value)</strong> pair.</p>
+    <p><strong>Map:</strong> <code>(k1, v1) → list(k2, v2)</code> &nbsp;·&nbsp; <strong>Reduce:</strong> <code>(k2, list(v2)) → list(k3, v3)</code></p>
+  </div>
+
+  <h3>Phases, in order</h3>
+  <div class="flow"><span>Input file</span><i>→</i><span>Input Splits</span><i>→</i><span>RecordReader</span><i>→</i><span>Map</span><i>→</i><span>Combiner (optional)</span><i>→</i><span>Partitioner</span><i>→</i><span>Shuffle &amp; Sort</span><i>→</i><span>Reduce</span><i>→</i><span>Output (part-r-00000)</span></div>
+  <ol>
+    <li><strong>Input split</strong>: logical chunk of input, usually one HDFS block. <strong>Number of mappers = number of splits.</strong></li>
+    <li><strong>RecordReader</strong>: turns a split into key-value pairs. With TextInputFormat, <strong>key = byte offset</strong> of the line and <strong>value = the line</strong>.</li>
+    <li><strong>Mapper</strong>: runs your map logic on each record and emits intermediate (key, value) pairs. Its output goes to local disk, not HDFS.</li>
+    <li><strong>Combiner</strong>: a "mini reducer" that runs on the mapper's node to pre-aggregate and reduce network traffic. It is only safe for associative and commutative operations like sum, max and count. It is <strong>not</strong> safe for average.</li>
+    <li><strong>Partitioner</strong>: decides which reducer gets a key. The default is <code>hash(key) mod numReducers</code>, so all values of one key go to the <strong>same</strong> reducer.</li>
+    <li><strong>Shuffle &amp; Sort</strong>: moves map output to reducers, <strong>groups values by key</strong> and <strong>sorts by key</strong>. This is where (k, v1), (k, v2) becomes (k, [v1, v2]).</li>
+    <li><strong>Reducer</strong>: aggregates each key's list of values and writes the final output to HDFS.</li>
+  </ol>
+
+  <h3>Key-value types (Word Count)</h3>
+  <div class="tbl"><table>
+    <tr><th>Stage</th><th>Key</th><th>Value</th><th>Example</th></tr>
+    <tr><td>Mapper input</td><td>LongWritable (offset)</td><td>Text (line)</td><td>(0, "Deer Bear River")</td></tr>
+    <tr><td>Mapper output</td><td>Text (word)</td><td>IntWritable (1)</td><td>(Deer, 1)</td></tr>
+    <tr><td>Reducer input</td><td>Text (word)</td><td>Iterable&lt;IntWritable&gt;</td><td>(Car, [1,1,1])</td></tr>
+    <tr><td>Reducer output</td><td>Text (word)</td><td>IntWritable (count)</td><td>(Car, 3)</td></tr>
+  </table></div>
+
+  <h3>Worked trace: Word Count (draw this in the exam)</h3>
+  <div class="pair"><div class="code"><span class="tag">Input file (3 lines)</span><pre>Deer Bear River
+Car Car River
+Deer Car Bear</pre></div></div>
+  <div class="tbl"><table>
+    <tr><th>Step</th><th>Key-value pairs</th></tr>
+    <tr><td>RecordReader<br>(offset, line)</td><td>(0, "Deer Bear River")<br>(16, "Car Car River")<br>(30, "Deer Car Bear")</td></tr>
+    <tr><td>Map output</td><td>Mapper 1: (Deer,1) (Bear,1) (River,1)<br>Mapper 2: (Car,1) (Car,1) (River,1)<br>Mapper 3: (Deer,1) (Car,1) (Bear,1)</td></tr>
+    <tr><td>Combiner (optional)</td><td>Mapper 2 output becomes (Car,2) (River,1)</td></tr>
+    <tr><td>Shuffle &amp; Sort<br>(grouped, sorted)</td><td>(Bear,[1,1])<br>(Car,[1,1,1])<br>(Deer,[1,1])<br>(River,[1,1])</td></tr>
+    <tr><td>Reduce output</td><td>(Bear,2) (Car,3) (Deer,2) (River,2)</td></tr>
+  </table></div>
+  <p class="small">The offsets are 0, 16 and 30 because "Deer Bear River" is 15 characters plus a newline (16), and "Car Car River" is 13 plus a newline (16 + 14 = 30).</p>
+
+  <h4>Pseudocode (language-neutral; Java API not required)</h4>
+  <div class="pair"><div class="code"><span class="tag">Pseudocode</span><pre>map(key = offset, value = line):
+    for each word w in line.split(" "):
+        emit(w, 1)
+
+reduce(key = word, values = [1, 1, ...]):
+    sum = 0
+    for v in values: sum = sum + v
+    emit(word, sum)</pre></div>
+  <div class="out"><span class="tag">Output (part-r-00000)</span><pre>Bear	2
+Car	3
+Deer	2
+River	2</pre></div></div>
+
+  <h3>Example 2: Maximum temperature per year</h3>
+  <div class="pair"><div class="code"><span class="tag">Input</span><pre>2021,32
+2021,38
+2022,35
+2022,41
+2021,30</pre></div></div>
+  <div class="tbl"><table>
+    <tr><th>Stage</th><th>Pairs</th></tr>
+    <tr><td>Map: emit (year, temp)</td><td>(2021,32) (2021,38) (2022,35) (2022,41) (2021,30)</td></tr>
+    <tr><td>Shuffle &amp; Sort</td><td>(2021,[32,38,30]) (2022,[35,41])</td></tr>
+    <tr><td>Reduce: emit (year, max)</td><td><strong>(2021,38) (2022,41)</strong></td></tr>
+  </table></div>
+  <p class="small">A combiner is safe here, because max of maxes = max.</p>
+
+  <h3>Example 3: Average marks per department (the combiner trap)</h3>
+  <div class="tbl"><table>
+    <tr><th>Stage</th><th>Pairs</th></tr>
+    <tr><td>Input</td><td>CSE,80 · CSE,90 · ECE,70 · CSE,70 · ECE,90</td></tr>
+    <tr><td>Map: emit (dept, marks)</td><td>(CSE,80) (CSE,90) (ECE,70) (CSE,70) (ECE,90)</td></tr>
+    <tr><td>Shuffle &amp; Sort</td><td>(CSE,[80,90,70]) (ECE,[70,90])</td></tr>
+    <tr><td>Reduce: sum / count</td><td><strong>(CSE,80.0) (ECE,80.0)</strong></td></tr>
+  </table></div>
+  <div class="warn"><b class="lbl">Why you can't use the reducer as a combiner for average</b>
+    <p>Suppose mapper 1 has CSE [80, 90], giving avg 85, and mapper 2 has CSE [70], giving avg 70. The average of the averages is 77.5, but the true average is 240 / 3 = <strong>80</strong>. The fix is to emit <code>(dept, (sum, count))</code> from the mapper or combiner, and divide only in the reducer.</p>
+  </div>
+
+  <h3>Points to remember</h3>
+  <ul>
+    <li>The number of reducers is set by the user. With 0 reducers you get a <strong>map-only job</strong>: no shuffle, and mapper output goes straight to HDFS.</li>
+    <li>Reducers start only after <strong>all</strong> mappers finish. The shuffle copy can begin earlier.</li>
+    <li>Fault tolerance: if a task fails, it is re-run on another node using a replica of the block.</li>
+    <li><strong>Speculative execution</strong>: a slow task is also launched on another node, and whichever copy finishes first wins.</li>
+    <li>Drawbacks: disk I/O between stages, so it is slow for iterative work, verbose to write, and batch-only.</li>
+  </ul>
+</section>
+
+<!-- ========================= PIG ========================= -->
+<section class="unit" id="pig">
+  <div class="unit-head"><h2>Pig Latin</h2><span class="qtype">Code + output</span></div>
+
+  <div class="def"><b class="lbl">Definition</b>
+    <p><strong>Apache Pig</strong> is a high-level platform on Hadoop for analysing large data sets. Its language, <strong>Pig Latin</strong>, is a <strong>procedural data-flow language</strong> created at <strong>Yahoo</strong>. Every Pig script is converted internally into <strong>MapReduce jobs</strong>. About 10 lines of Pig can replace about 200 lines of Java MapReduce.</p>
+  </div>
+  <ul>
+    <li><strong>Execution modes:</strong> Local mode <code>pig -x local</code> (local files) and MapReduce mode <code>pig</code> or <code>pig -x mapreduce</code> (HDFS).</li>
+    <li><strong>Ways to run:</strong> Grunt shell (interactive, <code>grunt&gt;</code>), a script file (<code>pig script.pig</code>), or embedded (UDFs).</li>
+    <li><strong>Internals:</strong> Parser → Optimizer → Compiler → MapReduce execution engine.</li>
+    <li>Statements are lazy. Nothing runs until <code>DUMP</code> or <code>STORE</code>.</li>
+    <li>Relation and field names are <strong>case-sensitive</strong>. Keywords like LOAD and FOREACH are not.</li>
+    <li>Fields can be referred to by position: <code>$0</code>, <code>$1</code>, …</li>
+  </ul>
+
+  <h3>Data model (complex data types)</h3>
+  <div class="tbl"><table>
+    <tr><th>Type</th><th>Meaning</th><th>Symbol</th><th>Example</th></tr>
+    <tr><td><strong>Atom</strong></td><td>Single simple value: int, long, float, double, chararray, bytearray, boolean</td><td>none</td><td><code>'Raja'</code>, <code>30</code></td></tr>
+    <tr><td><strong>Tuple</strong></td><td>Ordered set of fields, like a row in an RDBMS</td><td><code>( )</code></td><td><code>(Raja, 30)</code></td></tr>
+    <tr><td><strong>Bag</strong></td><td>Unordered collection of tuples (duplicates allowed, tuples may have different numbers of fields), like a table</td><td><code>{ }</code></td><td><code>{(Raja,30),(Mohammad,45)}</code></td></tr>
+    <tr><td><strong>Map</strong></td><td>Set of key#value pairs. The key must be a unique chararray, the value can be any type</td><td><code>[ ]</code></td><td><code>[city#Chennai]</code></td></tr>
+    <tr><td><strong>Relation</strong></td><td>An outer bag (what LOAD returns)</td><td>none</td><td><code>A</code></td></tr>
+  </table></div>
+
+  <h3>Sample data used below (write this in the exam first)</h3>
+  <div class="grid2">
+    <div class="pair"><div class="code"><span class="tag">/pigdemo/student.tsv (tab-separated)</span><pre>1	John	3.5
+2	Jack	4.0
+3	Smith	3.0
+4	Anu	4.0
+5	Ravi	3.5</pre></div></div>
+    <div class="pair"><div class="code"><span class="tag">/pigdemo/department.tsv</span><pre>1	101	CSE
+2	102	ECE
+3	101	CSE
+6	103	MECH</pre></div></div>
+  </div>
+
+  <h3>LOAD, DUMP, DESCRIBE, STORE</h3>
+  <div class="pair"><div class="code"><span class="tag">Pig Latin</span><pre>A = LOAD '/pigdemo/student.tsv' AS (rollno:int, name:chararray, gpa:float);
+D = LOAD '/pigdemo/department.tsv' AS (rollno:int, deptno:int, deptname:chararray);
+DUMP A;
+DESCRIBE A;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(1,John,3.5)
+(2,Jack,4.0)
+(3,Smith,3.0)
+(4,Anu,4.0)
+(5,Ravi,3.5)
+A: {rollno: int,name: chararray,gpa: float}</pre></div></div>
+  <ul>
+    <li><code>PigStorage(',')</code> loads or stores delimited text with the given delimiter. The default delimiter is tab <code>'\t'</code>.</li>
+    <li><code>STORE A INTO '/pigdemo/out' USING PigStorage(',');</code> writes to HDFS as part files and prints nothing except "Successfully stored 5 records".</li>
+  </ul>
+
+  <h3>Diagnostic operators</h3>
+  <div class="tbl"><table>
+    <tr><th>Operator</th><th>Use</th><th>Syntax</th></tr>
+    <tr><td>DUMP</td><td>Runs the plan and prints the relation on the terminal</td><td><code>DUMP alias;</code></td></tr>
+    <tr><td>DESCRIBE</td><td>Shows the schema of a relation</td><td><code>DESCRIBE alias;</code></td></tr>
+    <tr><td>EXPLAIN</td><td>Shows the logical, physical and MapReduce execution plans</td><td><code>EXPLAIN alias;</code></td></tr>
+    <tr><td>ILLUSTRATE</td><td>Step-by-step execution of the statements on a small sample of rows</td><td><code>ILLUSTRATE alias;</code></td></tr>
+  </table></div>
+
+  <h3>FILTER, FOREACH, DISTINCT</h3>
+  <div class="pair"><div class="code"><span class="tag">FILTER: select rows by a condition</span><pre>X = FILTER A BY gpa == 4.0;
+DUMP X;
+Y = FILTER A BY gpa &gt;= 3.5 AND rollno &gt; 2;
+DUMP Y;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(2,Jack,4.0)
+(4,Anu,4.0)
+
+(4,Anu,4.0)
+(5,Ravi,3.5)</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">FOREACH … GENERATE: pick or compute columns</span><pre>B = FOREACH A GENERATE name, gpa;
+DUMP B;
+C = FOREACH A GENERATE $1, gpa * 10;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(John,3.5)
+(Jack,4.0)
+(Smith,3.0)
+(Anu,4.0)
+(Ravi,3.5)
+-- C gives (John,35.0) (Jack,40.0) (Smith,30.0) (Anu,40.0) (Ravi,35.0)</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">DISTINCT: remove duplicate tuples</span><pre>-- dup.tsv contains:  1 John 3.5 / 2 Jack 4.0 / 1 John 3.5
+P = LOAD '/pigdemo/dup.tsv' AS (rollno:int, name:chararray, gpa:float);
+Q = DISTINCT P;
+DUMP Q;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(1,John,3.5)
+(2,Jack,4.0)</pre></div></div>
+
+  <h3>ORDER BY and LIMIT</h3>
+  <div class="pair"><div class="code"><span class="tag">Pig Latin</span><pre>O = ORDER A BY gpa DESC;
+DUMP O;
+L = LIMIT O 2;
+DUMP L;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(2,Jack,4.0)
+(4,Anu,4.0)
+(1,John,3.5)
+(5,Ravi,3.5)
+(3,Smith,3.0)
+
+(2,Jack,4.0)
+(4,Anu,4.0)</pre></div></div>
+  <p class="small">Rows with equal gpa can come out in any order. LIMIT without ORDER returns any N tuples.</p>
+
+  <h3>GROUP</h3>
+  <p>GROUP collects tuples that have the same key. The result has <strong>one tuple per group</strong> in the form <code>(group, {bag of matching tuples})</code>.</p>
+  <div class="pair"><div class="code"><span class="tag">Pig Latin</span><pre>G = GROUP A BY gpa;
+DUMP G;
+DESCRIBE G;
+C = FOREACH G GENERATE group, COUNT(A);
+DUMP C;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(3.0,{(3,Smith,3.0)})
+(3.5,{(5,Ravi,3.5),(1,John,3.5)})
+(4.0,{(4,Anu,4.0),(2,Jack,4.0)})
+G: {group: float,A: {(rollno: int,name: chararray,gpa: float)}}
+
+(3.0,1)
+(3.5,2)
+(4.0,2)</pre></div></div>
+  <ul>
+    <li>Group on several columns: <code>GROUP employees BY (city, county);</code>. The key becomes a tuple, for example <code>((Chicago,Cook),{…})</code>.</li>
+    <li><code>GROUP A ALL;</code> puts every tuple into one group whose key is <code>all</code>. Use it to count or sum the whole relation.</li>
+  </ul>
+
+  <h3>COGROUP</h3>
+  <p>Like GROUP, but on <strong>two or more relations</strong>. You get one bag per relation.</p>
+  <div class="pair"><div class="code"><span class="tag">Pig Latin</span><pre>CG = COGROUP A BY rollno, D BY rollno;
+DUMP CG;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(1,{(1,John,3.5)},{(1,101,CSE)})
+(2,{(2,Jack,4.0)},{(2,102,ECE)})
+(3,{(3,Smith,3.0)},{(3,101,CSE)})
+(4,{(4,Anu,4.0)},{})
+(5,{(5,Ravi,3.5)},{})
+(6,{},{(6,103,MECH)})</pre></div></div>
+
+  <h3>JOIN (self, inner, left, right, full outer)</h3>
+  <div class="pair"><div class="code"><span class="tag">Inner join</span><pre>J = JOIN A BY rollno, D BY rollno;
+DUMP J;
+DESCRIBE J;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(1,John,3.5,1,101,CSE)
+(2,Jack,4.0,2,102,ECE)
+(3,Smith,3.0,3,101,CSE)
+J: {A::rollno: int,A::name: chararray,A::gpa: float,D::rollno: int,D::deptno: int,D::deptname: chararray}</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">Outer joins</span><pre>LJ = JOIN A BY rollno LEFT OUTER, D BY rollno;
+RJ = JOIN A BY rollno RIGHT OUTER, D BY rollno;
+FJ = JOIN A BY rollno FULL OUTER, D BY rollno;
+DUMP FJ;</pre></div>
+  <div class="out"><span class="tag">Output (FULL OUTER)</span><pre>(1,John,3.5,1,101,CSE)
+(2,Jack,4.0,2,102,ECE)
+(3,Smith,3.0,3,101,CSE)
+(4,Anu,4.0,,,)
+(5,Ravi,3.5,,,)
+(,,,6,103,MECH)</pre></div></div>
+  <ul>
+    <li><strong>LEFT OUTER</strong> = the 3 matches plus <code>(4,Anu,4.0,,,)</code> and <code>(5,Ravi,3.5,,,)</code>. All rows from the left are kept.</li>
+    <li><strong>RIGHT OUTER</strong> = the 3 matches plus <code>(,,,6,103,MECH)</code>. All rows from the right are kept.</li>
+    <li><strong>FULL OUTER</strong> = rows from both sides, matched where possible. Null fields print as empty.</li>
+    <li><strong>Self join</strong>: load the same file twice under two aliases, then <code>JOIN A1 BY rollno, A2 BY rollno;</code>. You get <code>(1,John,3.5,1,John,3.5)</code> and so on.</li>
+  </ul>
+
+  <h3>CROSS, UNION, SPLIT, SAMPLE</h3>
+  <div class="pair"><div class="code"><span class="tag">CROSS: Cartesian product</span><pre>CR = CROSS A, D;
+DUMP CR;</pre></div>
+  <div class="out"><span class="tag">Output (5 × 4 = 20 tuples; first few shown)</span><pre>(1,John,3.5,1,101,CSE)
+(1,John,3.5,2,102,ECE)
+(1,John,3.5,3,101,CSE)
+(1,John,3.5,6,103,MECH)
+(2,Jack,4.0,1,101,CSE)
+...</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">UNION: merge contents of two relations</span><pre>U = UNION A, D;
+STORE U INTO '/pigdemos/uniondemo';
+DUMP U;</pre></div>
+  <div class="out"><span class="tag">Output (9 tuples; order not guaranteed)</span><pre>(1,John,3.5)
+(2,Jack,4.0)
+(3,Smith,3.0)
+(4,Anu,4.0)
+(5,Ravi,3.5)
+(1,101,CSE)
+(2,102,ECE)
+(3,101,CSE)
+(6,103,MECH)</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">SPLIT: partition one relation into many</span><pre>SPLIT A INTO X IF gpa == 4.0, Y IF gpa &lt; 4.0;
+DUMP X;
+DUMP Y;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(2,Jack,4.0)
+(4,Anu,4.0)
+
+(1,John,3.5)
+(3,Smith,3.0)
+(5,Ravi,3.5)</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">SAMPLE: random sample (fraction 0 to 1)</span><pre>S = SAMPLE A 0.4;
+DUMP S;</pre></div>
+  <div class="out"><span class="tag">Output (random, about 40%)</span><pre>(2,Jack,4.0)
+(5,Ravi,3.5)</pre></div></div>
+
+  <h3>Eval functions: AVG, MAX, MIN, SUM, COUNT</h3>
+  <div class="pair"><div class="code"><span class="tag">/pigdemo/student.csv</span><pre>John,80
+John,90
+Jack,70
+Jack,60
+Anu,95</pre></div></div>
+  <div class="pair"><div class="code"><span class="tag">Pig Latin</span><pre>M = LOAD '/pigdemo/student.csv' USING PigStorage(',') AS (studname:chararray, marks:int);
+G = GROUP M BY studname;
+R = FOREACH G GENERATE group, AVG(M.marks), MAX(M.marks), MIN(M.marks), SUM(M.marks), COUNT(M);
+DUMP R;</pre></div>
+  <div class="out"><span class="tag">Output (name, avg, max, min, sum, count)</span><pre>(Anu,95.0,95,95,95,1)
+(Jack,65.0,70,60,130,2)
+(John,85.0,90,80,170,2)</pre></div></div>
+  <div class="tbl"><table>
+    <tr><th>Function</th><th>Does</th></tr>
+    <tr><td>AVG()</td><td>Average of numeric values in a bag. Ignores nulls, returns a double</td></tr>
+    <tr><td>MAX() / MIN()</td><td>Highest / lowest value in a single-column bag</td></tr>
+    <tr><td>SUM()</td><td>Total of the numeric values</td></tr>
+    <tr><td>COUNT()</td><td>Number of tuples in a bag. <strong>Ignores</strong> tuples whose first field is null</td></tr>
+    <tr><td>COUNT_STAR()</td><td>Number of tuples, <strong>including</strong> nulls</td></tr>
+    <tr><td>CONCAT()</td><td>Joins two or more expressions of the same type</td></tr>
+    <tr><td>TOKENIZE()</td><td>Splits a string into a bag of words</td></tr>
+    <tr><td>IsEmpty()</td><td>Checks whether a bag or map is empty</td></tr>
+    <tr><td>DIFF() / SUBTRACT()</td><td>Compare two bags / remove one bag's tuples from another</td></tr>
+    <tr><td>SIZE()</td><td>Number of elements, for any Pig type</td></tr>
+    <tr><td>BagToString()</td><td>Concatenates a bag's elements into a string</td></tr>
+    <tr><td>PluckTuple()</td><td>Keeps only the columns that start with a given prefix</td></tr>
+  </table></div>
+
+  <h4>COUNT_STAR (slide example)</h4>
+  <div class="pair"><div class="code"><span class="tag">data.txt has 6 rows: 1,John 2,Alice 3,John 4,Tom 5,Jane 6,John</span><pre>A = LOAD 'data.txt' USING PigStorage(',') AS (id:int, name:chararray);
+grouped = GROUP A BY name;
+name_count = FOREACH grouped GENERATE group AS name, COUNT_STAR(A) AS count;
+DUMP name_count;
+
+allg = GROUP A ALL;
+total = FOREACH allg GENERATE COUNT_STAR(A);
+DUMP total;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(John,3)
+(Alice,1)
+(Tom,1)
+(Jane,1)
+
+(6)</pre></div></div>
+  <p class="small">With the original 5-row file (no duplicates) the total is <code>(5)</code>.</p>
+
+  <h3>Word count in Pig (very important)</h3>
+  <div class="pair"><div class="code"><span class="tag">Input /user/hadoop/HDFS_File.txt</span><pre>hello world
+hello pig
+pig is fun</pre></div></div>
+  <div class="pair"><div class="code"><span class="tag">Pig Latin</span><pre>lines     = LOAD '/user/hadoop/HDFS_File.txt' AS (line:chararray);
+words     = FOREACH lines GENERATE FLATTEN(TOKENIZE(line)) AS word;
+grouped   = GROUP words BY word;
+wordcount = FOREACH grouped GENERATE group, COUNT(words);
+DUMP wordcount;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(fun,1)
+(hello,2)
+(is,1)
+(pig,2)
+(world,1)</pre></div></div>
+  <p class="small">How it works: <code>TOKENIZE("hello world")</code> gives the bag <code>{(hello),(world)}</code>. <code>FLATTEN</code> turns that bag into separate rows <code>(hello)</code>, <code>(world)</code>. GROUP and COUNT then do the same job as reduce in MapReduce.</p>
+
+  <h3>Complex types in code</h3>
+  <h4>Tuple</h4>
+  <div class="pair"><div class="code"><span class="tag">Input: each line has two tuples, tab-separated</span><pre>(x,12)	(y,13)
+(z,7)	(f,5)
+(s,8)	(sc,12)</pre></div></div>
+  <div class="pair"><div class="code"><span class="tag">Pig Latin</span><pre>A = LOAD 'tuple_data' AS (t1:tuple(a:chararray,b:int), t2:tuple(c:chararray,d:int));
+B = FOREACH A GENERATE FLATTEN(t1), FLATTEN(t2);
+DUMP B;
+C = FOREACH A GENERATE t1.a, t2.d;
+DUMP C;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(x,12,y,13)
+(z,7,f,5)
+(s,8,sc,12)
+
+(x,13)
+(z,5)
+(s,12)</pre></div></div>
+
+  <h4>Map (access with <code>#</code>)</h4>
+  <div class="pair"><div class="code"><span class="tag">Input studentcity.tsv</span><pre>john	[city#Bangalore]
+Jack	[city#Pune]
+james	[city#Chennai]</pre></div></div>
+  <div class="pair"><div class="code"><span class="tag">Pig Latin</span><pre>A = LOAD '/home/hduser/Desktop/studentcity.tsv' AS (Name:chararray, m:map[chararray]);
+DUMP A;
+B = FOREACH A GENERATE m#'city' AS CityName:chararray;
+DUMP B;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(john,[city#Bangalore])
+(Jack,[city#Pune])
+(james,[city#Chennai])
+
+(Bangalore)
+(Pune)
+(Chennai)</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">Map with several keys · data.txt: 1 [John#25,Alice#30] / 2 [Jane#22,Tom#28]</span><pre>A = LOAD 'data.txt' AS (id:int, info:map[int]);
+C = FOREACH A GENERATE id, info#'John' AS john_age;
+DUMP C;
+D = FOREACH A GENERATE id, FLATTEN(info);
+DUMP D;
+E = FILTER A BY info#'John' &gt; 20;
+DUMP E;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(1,25)
+(2,)              -- 'John' key missing, so null (printed as empty)
+
+(1,John,25)
+(1,Alice,30)
+(2,Jane,22)
+(2,Tom,28)
+
+(1,[John#25,Alice#30])</pre></div></div>
+
+  <h4>Bag</h4>
+  <div class="pair"><div class="code"><span class="tag">data.txt: 1,John,{(25,New York),(30,Boston)} / 2,Jane,{(22,Chicago),(28,San Francisco)}</span><pre>A = LOAD 'data.txt' USING PigStorage(',') AS (id:int, name:chararray, data:bag{t:tuple(age:int, address:chararray)});
+C = FOREACH A GENERATE id, name, FLATTEN(data);
+DUMP C;
+-- filter inside a bag needs a nested FOREACH:
+E = FOREACH A { older = FILTER data BY age &gt; 25; GENERATE id, name, older; };
+DUMP E;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(1,John,25,New York)
+(1,John,30,Boston)
+(2,Jane,22,Chicago)
+(2,Jane,28,San Francisco)
+
+(1,John,{(30,Boston)})
+(2,Jane,{(28,San Francisco)})</pre></div></div>
+  <div class="pair"><div class="code"><span class="tag">Bag of bags (slide)</span><pre>A = LOAD 'bag_data' AS (B1:bag{T1:tuple(t1:int,t2:int)}, B2:bag{T2:tuple(f1:int,f2:int)});
+DUMP A;
+DESCRIBE A;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>({(8,9),(0,1)},{(8,9),(1,1)})
+({(2,3),(4,5)},{(2,3),(4,5)})
+({(6,7),(3,7)},{(2,2),(3,7)})
+A: {B1: {T1: (t1: int,t2: int)},B2: {T2: (f1: int,f2: int)}}</pre></div></div>
+
+  <h3>Tuple / Bag / Map functions</h3>
+  <div class="pair"><div class="code"><span class="tag">studentdata.txt: 1001,Rajiv,Reddy,Hyderabad,3.5</span><pre>studentdata = LOAD '/pigexample/studentdata.txt' USING PigStorage(',')
+   AS (studentid:int, firstname:chararray, lastname:chararray, city:chararray, gpa:float);
+tobagdata   = FOREACH studentdata GENERATE TOBAG(studentid, firstname, lastname, city, gpa);
+totupledata = FOREACH studentdata GENERATE TOTUPLE(studentid, firstname, lastname, city, gpa);
+tomapdata   = FOREACH studentdata GENERATE TOMAP('name', firstname, 'city', city);
+DUMP tobagdata;  DUMP totupledata;  DUMP tomapdata;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>({(1001),(Rajiv),(Reddy),(Hyderabad),(3.5)})
+((1001,Rajiv,Reddy,Hyderabad,3.5))
+([name#Rajiv,city#Hyderabad])</pre></div></div>
+  <div class="pair"><div class="code"><span class="tag">TOP(n, column, bag): top N tuples · uses the marks relation M above</span><pre>G2 = GROUP M ALL;
+T = FOREACH G2 GENERATE TOP(2, 1, M);
+DUMP T;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>({(Anu,95),(John,90)})</pre></div></div>
+
+  <h3>UDF (User Defined Function) and Piggybank</h3>
+  <ul>
+    <li><strong>Piggybank</strong> is Pig's repository of user-contributed functions. It ships with Pig but is not built in, so you must <code>REGISTER</code> its JAR first.</li>
+    <li>A custom UDF is a Java class that <code>extends EvalFunc&lt;String&gt;</code> and overrides <code>exec(Tuple input)</code>. You don't need to write the Java, just know this line.</li>
+  </ul>
+  <div class="pair"><div class="code"><span class="tag">Pig Latin: convert names to upper case</span><pre>REGISTER /root/pigdemos/myudfs.jar;
+A = LOAD '/pigdemo/student.tsv' AS (rollno:int, name:chararray, gpa:float);
+B = FOREACH A GENERATE myudfs.UPPER(name);
+DUMP B;</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(JOHN)
+(JACK)
+(SMITH)
+(ANU)
+(RAVI)</pre></div></div>
+
+  <h3>Parameter substitution</h3>
+  <div class="pair"><div class="code"><span class="tag">parameterdemo.pig</span><pre>A = LOAD '$student' AS (rollno:int, name:chararray, gpa:float);
+DUMP A;
+
+-- run with:
+pig -param student=/pigdemo/student.tsv parameterdemo.pig</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>(1,John,3.5)
+(2,Jack,4.0)
+(3,Smith,3.0)
+(4,Anu,4.0)
+(5,Ravi,3.5)</pre></div></div>
+  <p class="small">Parameters let you pass values at run time, so the same script can run on different files. You can also set a fallback with <code>%default student '/pigdemo/student.tsv';</code></p>
+
+  <h3>Comparisons (2-mark favourites)</h3>
+  <div class="tbl"><table>
+    <tr><th>Apache Pig</th><th>SQL</th></tr>
+    <tr><td>Procedural language</td><td>Declarative language</td></tr>
+    <tr><td>Schema is optional (fields as $0, $1)</td><td>Schema is mandatory</td></tr>
+    <tr><td>Nested relational data model</td><td>Flat relational data model</td></tr>
+    <tr><td>Limited query optimisation</td><td>More opportunity for optimisation</td></tr>
+  </table></div>
+  <div class="tbl"><table>
+    <tr><th>Apache Pig</th><th>MapReduce</th></tr>
+    <tr><td>Data-flow language, high level</td><td>Data processing paradigm, low level and rigid</td></tr>
+    <tr><td>Join is simple</td><td>Join is difficult</td></tr>
+    <tr><td>Multi-query approach, so short code</td><td>About 20 times more lines for the same task</td></tr>
+    <tr><td>No compilation; converted into MR jobs internally</td><td>Long compilation process</td></tr>
+  </table></div>
+  <div class="tbl"><table>
+    <tr><th>Pig</th><th>Hive (comparison only)</th></tr>
+    <tr><td>Pig Latin, created at Yahoo</td><td>HiveQL, created at Facebook</td></tr>
+    <tr><td>Data-flow, procedural</td><td>Query language, declarative</td></tr>
+    <tr><td>Structured, semi-structured and unstructured data</td><td>Mostly structured data</td></tr>
+  </table></div>
+  <div class="grid2">
+    <div class="card"><h4>Use Pig when</h4><ul><li>Data loads are time-sensitive</li><li>Processing many different data sources</li><li>Analytical insight is needed through sampling</li></ul></div>
+    <div class="card"><h4>Don't use Pig when</h4><ul><li>Data is fully unstructured, like video, audio or raw text</li><li>There is a strict time constraint, since Pig is slower than hand-tuned MapReduce</li></ul></div>
+  </div>
+</section>
+
+<!-- ========================= NOSQL ========================= -->
+<section class="unit" id="nosql">
+  <div class="unit-head"><h2>NoSQL databases</h2><span class="qtype">Theory + code</span></div>
+
+  <div class="def"><b class="lbl">Definition</b>
+    <p>A <strong>NoSQL</strong> ("Not only SQL") database stores and retrieves data using models <strong>other than the tabular relations</strong> of an RDBMS. It offers high performance, high availability, easy horizontal scaling and a flexible schema.</p>
+  </div>
+
+  <h3>Four types (with examples)</h3>
+  <div class="tbl"><table>
+    <tr><th>Type</th><th>How data is stored</th><th>Examples</th><th>Good for</th></tr>
+    <tr><td><strong>Key-Value</strong></td><td>Key → value (opaque blob)</td><td>Redis, Riak, DynamoDB</td><td>Caching, sessions, carts</td></tr>
+    <tr><td><strong>Wide-column</strong></td><td>Rows with column families</td><td><strong>HBase</strong>, Cassandra</td><td>Huge sparse data, time series</td></tr>
+    <tr><td><strong>Document</strong></td><td>JSON/BSON documents</td><td>MongoDB, CouchDB</td><td>Catalogs, profiles, CMS</td></tr>
+    <tr><td><strong>Graph</strong></td><td>Nodes + edges</td><td>Neo4j, InfiniteGraph</td><td>Social networks, recommendations</td></tr>
+  </table></div>
+
+  <h3>Benefits of NoSQL</h3>
+  <ul>
+    <li>Handles large volumes of rapidly changing structured, semi-structured and unstructured data.</li>
+    <li>Fits agile development: quick schema iteration and frequent code pushes.</li>
+    <li>Geographically distributed <strong>scale-out</strong> architecture instead of an expensive monolithic server.</li>
+    <li><strong>Dynamic schema</strong>: the structure can evolve as the data evolves. Example: a news Article first has Title, Author, Date and Category. Later you add Event, Location, Person and Claim without migrating the old records.</li>
+    <li><strong>Auto-sharding</strong>: the database automatically splits data into <strong>shards</strong> and spreads them across servers. Benefits: scalability, performance, load balancing and automatic rebalancing. Example: 1 billion users are sharded by user_id into Shard 1 (0–333M), Shard 2 and Shard 3. When users grow, a 4th shard is created and the data is rebalanced.</li>
+    <li><strong>Replication</strong>: copies of the data on several servers. A leader takes writes, replicas serve reads, giving high availability. Remember: <strong>sharding = dividing data, replication = copying data.</strong></li>
+  </ul>
+
+  <h3>CAP theorem (Brewer's theorem)</h3>
+  <div class="def"><b class="lbl">Statement</b>
+    <p>A distributed system can guarantee only <strong>two</strong> of these three at the same time:</p>
+    <p><strong>C – Consistency:</strong> every node sees the same data at the same time.<br>
+    <strong>A – Availability:</strong> every request gets a response, even when some nodes fail.<br>
+    <strong>P – Partition tolerance:</strong> the system keeps working even if the network between nodes breaks.</p>
+  </div>
+  <div class="tbl"><table>
+    <tr><th>Class</th><th>Gives up</th><th>Behaviour during a partition</th><th>Examples</th></tr>
+    <tr><td><strong>CP</strong></td><td>Availability</td><td>Shuts down the inconsistent node until the partition heals</td><td><strong>HBase</strong>, MongoDB, Redis</td></tr>
+    <tr><td><strong>AP</strong></td><td>Consistency</td><td>All nodes answer, but some may return old data. They resync later</td><td>Cassandra, CouchDB, Riak, DynamoDB</td></tr>
+    <tr><td><strong>CA</strong></td><td>Partition tolerance</td><td>Can't tolerate a partition, so in practice it is a single-site / non-distributed system</td><td>MySQL, SQL Server, MariaDB (RDBMS)</td></tr>
+  </table></div>
+  <ul>
+    <li><strong>Why CAP matters:</strong> it shows the trade-offs and the system's limits, and helps you <strong>choose the right database</strong>.</li>
+    <li><strong>Choose consistency</strong> when transactions need strict accuracy, as in <strong>banking and finance</strong>.</li>
+    <li><strong>Choose availability</strong> when the service must always respond, as in <strong>social media</strong>.</li>
+  </ul>
+
+  <h3>Types of consistency</h3>
+  <ul>
+    <li><strong>Strong consistency</strong>: once an update completes, every later read returns the new value.</li>
+    <li><strong>Weak consistency</strong>: no guarantee that later reads return the updated value.</li>
+    <li><strong>Eventual consistency</strong>: if no new updates are made, all replicas <em>eventually</em> return the last value. Temporary inconsistency is allowed.</li>
+  </ul>
+  <p>Variants of eventual consistency:</p>
+  <ul>
+    <li><strong>Causal</strong>: operations that are causally related are seen in the same order by every process. Useful for collaborative apps.</li>
+    <li><strong>Sequential</strong>: all processes see operations in one common order.</li>
+    <li><strong>Session</strong>: read-your-own-writes is guaranteed while the session lasts.</li>
+    <li><strong>Monotonic read</strong>: once you have seen a value, you never see an older one. <strong>Monotonic write</strong>: writes by the same process are serialised in order.</li>
+    <li><strong>Data-centric</strong>: data stays consistent across nodes regardless of concurrent operations.</li>
+  </ul>
+  <div class="tip"><b class="lbl">Facebook example (eventual consistency)</b>
+    <p>Bob posts a story on Alice's wall and tells her to look. Alice checks and sees nothing. A minute later she checks again and the story is there. Facebook chose eventual consistency because it has over 1 billion users and huge write volume. Eventual consistency reduces load and improves availability.</p>
+  </div>
+  <div class="tbl"><table>
+    <tr><th></th><th>Eventual consistency</th><th>Strong consistency</th></tr>
+    <tr><td>Consistency</td><td>The latest update may take a few ms to propagate, so a read can miss it</td><td>You always read the latest update</td></tr>
+    <tr><td>Performance</td><td>Fastest reads</td><td>Slower</td></tr>
+    <tr><td>Cost</td><td>Cheaper (two eventual reads = 1 RCU in DynamoDB)</td><td>Twice as expensive (one strong read = 1 RCU)</td></tr>
+  </table></div>
+
+  <h3>BASE properties</h3>
+  <ul>
+    <li><strong>B</strong>asically <strong>A</strong>vailable: data is spread and replicated across nodes, so it stays available even without immediate consistency.</li>
+    <li><strong>S</strong>oft state: values may change over time even without new input, as replicas sync. Consistency becomes the developer's responsibility.</li>
+    <li><strong>E</strong>ventually consistent: consistency is reached eventually, and reads are still allowed before that.</li>
+  </ul>
+  <div class="tbl"><table>
+    <tr><th>Criteria</th><th>ACID (RDBMS)</th><th>BASE (NoSQL)</th></tr>
+    <tr><td>Stands for</td><td>Atomicity, Consistency, Isolation, Durability</td><td>Basically Available, Soft state, Eventual consistency</td></tr>
+    <tr><td>Consistency</td><td>Strong</td><td>Weak / loose</td></tr>
+    <tr><td>Focus</td><td>Commits</td><td>Best attempt</td></tr>
+    <tr><td>Scaling</td><td>Vertical</td><td>Horizontal</td></tr>
+    <tr><td>Simplicity / maintenance</td><td>Simple, high maintenance</td><td>Complex, low maintenance</td></tr>
+    <tr><td>Implementation</td><td>Easy</td><td>Difficult</td></tr>
+    <tr><td>Upgrade</td><td>Harder</td><td>Easier</td></tr>
+    <tr><td>Examples</td><td>Oracle, MySQL, SQL Server</td><td>DynamoDB, Cassandra, CouchDB, SimpleDB</td></tr>
+  </table></div>
+
+  <h3>RDBMS vs NoSQL</h3>
+  <div class="tbl"><table>
+    <tr><th>Feature</th><th>RDBMS</th><th>NoSQL</th></tr>
+    <tr><td>Data model</td><td>Tables and rows</td><td>Document, key-value, column, graph</td></tr>
+    <tr><td>Schema</td><td>Fixed</td><td>Flexible / dynamic</td></tr>
+    <tr><td>Scaling</td><td>Vertical (bigger server)</td><td>Horizontal (more servers)</td></tr>
+    <tr><td>Properties</td><td>ACID, strong consistency</td><td>BASE, eventual consistency</td></tr>
+    <tr><td>Query language</td><td>SQL</td><td>Varied (JSON queries, CQL, HBase shell)</td></tr>
+    <tr><td>Use cases</td><td>Transactional systems</td><td>Big data and real-time apps</td></tr>
+  </table></div>
+
+  <div class="tip"><b class="lbl">NoSQL "code" in your syllabus = HBase shell</b>
+    <p>Your slides only have code for HBase, which is covered fully in the next section. As a backup, in case they ask for a document-DB query, here is the minimum MongoDB set. It is not in your slides.</p>
+  </div>
+  <div class="pair"><div class="code"><span class="tag">MongoDB shell (backup, not in slides)</span><pre>db.students.insertOne({_id: 1, name: "Arun", dept: "CSE", cgpa: 8.5})
+db.students.insertOne({_id: 2, name: "Priya", dept: "IT", cgpa: 9.1})
+db.students.find({dept: "CSE"})
+db.students.find({cgpa: {$gt: 9}}, {name: 1, _id: 0})
+db.students.updateOne({_id: 1}, {$set: {cgpa: 8.8}})
+db.students.deleteOne({_id: 2})
+db.students.countDocuments()</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>{ acknowledged: true, insertedId: 1 }
+{ acknowledged: true, insertedId: 2 }
+[ { _id: 1, name: 'Arun', dept: 'CSE', cgpa: 8.5 } ]
+[ { name: 'Priya' } ]
+{ acknowledged: true, matchedCount: 1, modifiedCount: 1 }
+{ acknowledged: true, deletedCount: 1 }
+1</pre></div></div>
+</section>
+
+<!-- ========================= HBASE ========================= -->
+<section class="unit" id="hbase">
+  <div class="unit-head"><h2>HBase</h2><span class="qtype">Theory + shell code</span></div>
+
+  <div class="def"><b class="lbl">Definition</b>
+    <p><strong>HBase</strong> is an open-source, <strong>distributed, column-oriented NoSQL database</strong> built on top of <strong>HDFS</strong>. It is modelled on Google's <strong>BigTable</strong>, is horizontally scalable, and gives <strong>random, real-time read/write access</strong> to huge amounts of data. It uses HDFS for fault tolerance.</p>
+  </div>
+  <p><strong>Why it's needed:</strong> Hadoop does only batch processing with <strong>sequential</strong> access, so even a simple lookup scans the whole data set. HBase lets you reach any row in a single unit of time (random access).</p>
+  <p><strong>Use HBase when:</strong> the data is too large for an RDBMS, you need random real-time reads and writes, data is spread across many machines, the schema may change, and you need to scale horizontally.</p>
+
+  <div class="tbl"><table>
+    <tr><th>Feature</th><th>RDBMS</th><th>HBase</th></tr>
+    <tr><td>Type</td><td>Relational</td><td>NoSQL (column-oriented)</td></tr>
+    <tr><td>Data model</td><td>Tables / rows / columns</td><td>Key-value with column families</td></tr>
+    <tr><td>Schema</td><td>Fixed</td><td>Flexible (only column families fixed)</td></tr>
+    <tr><td>Scaling</td><td>Mainly vertical</td><td>Horizontal</td></tr>
+    <tr><td>Data size</td><td>GB–TB</td><td>TB–PB</td></tr>
+    <tr><td>Joins</td><td>Supported</td><td>Not natively supported</td></tr>
+    <tr><td>Transactions</td><td>Full ACID</td><td>Row-level atomicity only</td></tr>
+    <tr><td>Query</td><td>SQL</td><td>HBase shell / API</td></tr>
+    <tr><td>Storage</td><td>Local disk</td><td>HDFS</td></tr>
+    <tr><td>Best for</td><td>Structured data</td><td>Huge, sparse data sets</td></tr>
+  </table></div>
+
+  <h3>Architecture: HMaster, RegionServer, ZooKeeper</h3>
+  <div class="grid2">
+    <div class="card"><h4>HMaster</h4><ul><li>Assigns regions to RegionServers</li><li>Handles DDL: create, delete, modify tables</li><li>Monitors RegionServers and balances load</li><li>Handles failover. Backup HMasters stand by, but only 1 is active</li></ul></div>
+    <div class="card"><h4>RegionServer</h4><ul><li>Tables are split horizontally into <strong>Regions</strong> (row-key ranges, about 256 MB by default)</li><li>Serves client reads and writes</li><li>Runs on HDFS DataNodes</li><li>One server can hold up to about 1000 regions</li></ul></div>
+    <div class="card"><h4>ZooKeeper</h4><ul><li>The "traffic controller"</li><li>Stores the location of the <strong>META table</strong></li><li>Tracks live servers through heartbeats and ephemeral nodes, and detects failures</li><li>Maintains configuration and provides distributed synchronisation</li></ul></div>
+  </div>
+
+  <h3>RegionServer components</h3>
+  <div class="tbl"><table>
+    <tr><th>Component</th><th>Role</th></tr>
+    <tr><td><strong>WAL</strong> (Write-Ahead Log)</td><td>Log file on HDFS. Every write is recorded here <em>first</em>, so data is not lost if the server crashes</td></tr>
+    <tr><td><strong>MemStore</strong> (write cache)</td><td>In-memory buffer of new writes, sorted. One per column family per region</td></tr>
+    <tr><td><strong>BlockCache</strong> (read cache)</td><td>Keeps frequently read blocks in memory using LRU eviction</td></tr>
+    <tr><td><strong>HFile</strong></td><td>The file on HDFS where sorted key-values are stored permanently</td></tr>
+    <tr><td><strong>Region</strong></td><td>A row-key range of a table</td></tr>
+  </table></div>
+
+  <h3>How a client finds data (META lookup)</h3>
+  <ol>
+    <li>The client gets the <strong>META table</strong> location from ZooKeeper.</li>
+    <li>It asks META which RegionServer holds the row key, and <strong>caches</strong> the answer.</li>
+    <li>It contacts that RegionServer directly for the row. Later requests use the cache, and META is asked again only on a miss, for example after a region moves.</li>
+  </ol>
+
+  <h3>Write path</h3>
+  <div class="flow"><span>1. Client write</span><i>→</i><span>2. WAL</span><i>→</i><span>3. MemStore</span><i>→</i><span>4. ACK to client</span><i>→</i><span>5. MemStore full: flush to HFile</span><i>→</i><span>6. Compaction</span></div>
+  <h3>Read path</h3>
+  <div class="flow"><span>ZooKeeper / META</span><i>→</i><span>BlockCache</span><i>→</i><span>MemStore</span><i>→</i><span>HFiles on HDFS</span></div>
+  <p>Reads are fast because recent reads sit in the BlockCache and recent writes sit in the MemStore, so HBase often answers without touching disk.</p>
+
+  <h3>Compaction and region split</h3>
+  <ul>
+    <li><strong>Minor compaction</strong>: merges a few small HFiles into a bigger one with a merge sort. Saves space.</li>
+    <li><strong>Major compaction</strong>: rewrites <strong>all</strong> HFiles of a region or column family into one, and <strong>drops deleted and expired cells</strong>. Improves read performance, but uses a lot of I/O.</li>
+    <li><strong>Region split</strong>: when a region grows too large it splits into two daughter regions, each holding half the key range. The split is reported to the HMaster, which may move a daughter to another server for load balancing. Example: A001–Z999 splits into A001–M999 and N001–Z999.</li>
+  </ul>
+
+  <h3>Data model</h3>
+  <ul>
+    <li><strong>Table</strong>: a collection of rows.</li>
+    <li><strong>Row key</strong>: unique ID of a row, stored as bytes, with rows kept sorted <strong>lexicographically</strong>.</li>
+    <li><strong>Column family</strong>: a group of related columns, defined when the table is <strong>created</strong>.</li>
+    <li><strong>Column qualifier</strong>: an individual column inside a family, which can be added at any time. Written as <code>family:qualifier</code>.</li>
+    <li><strong>Cell</strong>: the value at {row key + family + qualifier + <strong>timestamp</strong>}.</li>
+    <li><strong>Version</strong>: a cell can keep multiple timestamped versions.</li>
+    <li><strong>Data types</strong>: HBase is byte-oriented. Everything is stored as a <strong>byte array</strong>, and the application encodes and decodes strings, ints, floats, booleans, dates and binary data.</li>
+  </ul>
+
+  <h4>Sample table <code>student</code> (used in every command below)</h4>
+  <div class="tbl"><table>
+    <tr><th>Row key</th><th>personal:name</th><th>personal:city</th><th>academic:department</th><th>academic:cgpa</th></tr>
+    <tr><td>S001</td><td>Arun</td><td>Chennai</td><td>CSE</td><td>8.5</td></tr>
+    <tr><td>S002</td><td>Priya</td><td>Madurai</td><td>IT</td><td>9.1</td></tr>
+    <tr><td>S003</td><td>Ravi</td><td>Chennai</td><td>CSE</td><td>7.8</td></tr>
+    <tr><td>S004</td><td>Divya</td><td>Kochi</td><td>ECE</td><td>8.9</td></tr>
+    <tr><td>S005</td><td>Kiran</td><td>Bengaluru</td><td>IT</td><td>7.5</td></tr>
+    <tr><td>S006</td><td>Meena</td><td>Chennai</td><td>CSE</td><td>9.3</td></tr>
+  </table></div>
+
+  <h3>Starting HBase and general commands</h3>
+  <ul><li>Modes: Standalone (local), Pseudo-distributed (one machine using HDFS), Fully distributed (production).</li></ul>
+  <div class="pair"><div class="code"><span class="tag">Shell</span><pre>start-hbase.sh
+hbase shell
+hbase(main):001:0&gt; status
+hbase(main):002:0&gt; version
+hbase(main):003:0&gt; whoami
+hbase(main):004:0&gt; table_help</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>1 active master, 0 backup masters, 1 servers, 0 dead, 2.0000 average load
+2.5.11, r…, Tue …
+root (auth:SIMPLE)
+    groups: root
+(help text on table-reference commands)</pre></div></div>
+
+  <h3>DDL: create, list, describe, alter, disable, drop</h3>
+  <div class="pair"><div class="code"><span class="tag">HBase shell</span><pre>create 'student', 'personal', 'academic'
+list
+describe 'student'
+exists 'student'</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Created table student
+=&gt; Hbase::Table - student
+
+TABLE
+student
+1 row(s)
+=&gt; ["student"]
+
+Table student is ENABLED
+student
+COLUMN FAMILIES DESCRIPTION
+{NAME =&gt; 'academic', VERSIONS =&gt; '1', TTL =&gt; 'FOREVER', ...}
+{NAME =&gt; 'personal', VERSIONS =&gt; '1', TTL =&gt; 'FOREVER', ...}
+2 row(s)
+
+Table student does exist</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">HBase shell: alter, versions, disable/enable, drop, truncate</span><pre>alter 'student', NAME =&gt; 'contact'                <span class="c"># add column family</span>
+alter 'student', 'delete' =&gt; 'contact'            <span class="c"># delete column family</span>
+alter 'student', NAME =&gt; 'personal', VERSIONS =&gt; 3  <span class="c"># keep 3 versions</span>
+disable 'student'
+is_disabled 'student'
+enable 'student'
+truncate 'student'                               <span class="c"># delete all data, keep table</span>
+disable 'student'
+drop 'student'                                   <span class="c"># must disable before drop</span>
+exists 'student'</pre></div>
+  <div class="out"><span class="tag">Output (key lines)</span><pre>Updating all regions with the new schema...
+Done.
+true                                   (is_disabled)
+Truncating 'student' table (it may take a while):
+Disabling table... Truncating table...
+Table student does not exist           (after drop)</pre></div></div>
+  <p class="small">You can also create with versions directly: <code>create 'student', {NAME =&gt; 'personal', VERSIONS =&gt; 3}</code>.</p>
+
+  <h3>DML: put, get, scan, count, delete</h3>
+  <div class="pair"><div class="code"><span class="tag">put 'table', 'rowkey', 'family:qualifier', 'value'</span><pre>put 'student','S001','personal:name','Arun'
+put 'student','S001','personal:city','Chennai'
+put 'student','S001','academic:department','CSE'
+put 'student','S001','academic:cgpa','8.5'
+get 'student','S001'</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>COLUMN                    CELL
+ academic:cgpa            timestamp=2026-10-23T09:10:01.120, value=8.5
+ academic:department      timestamp=2026-10-23T09:10:01.095, value=CSE
+ personal:city            timestamp=2026-10-23T09:10:01.070, value=Chennai
+ personal:name            timestamp=2026-10-23T09:10:01.040, value=Arun
+1 row(s)</pre></div></div>
+  <p class="small">Columns come out sorted: the <code>academic</code> family before <code>personal</code>, and qualifiers alphabetically within each family. Timestamps are whatever time you ran the command.</p>
+
+  <div class="pair"><div class="code"><span class="tag">get a specific column / several columns</span><pre>get 'student','S001','personal:name'
+get 'student','S001', {COLUMN =&gt; ['personal:name','academic:cgpa']}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>COLUMN                    CELL
+ personal:name            timestamp=..., value=Arun
+1 row(s)
+
+COLUMN                    CELL
+ academic:cgpa            timestamp=..., value=8.5
+ personal:name            timestamp=..., value=Arun
+1 row(s)</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">scan: retrieve many rows (all 6 rows loaded)</span><pre>scan 'student', {COLUMNS =&gt; ['personal:name']}
+scan 'student', {STARTROW =&gt; 'S002', STOPROW =&gt; 'S004'}
+count 'student'</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>ROW        COLUMN+CELL
+ S001      column=personal:name, timestamp=..., value=Arun
+ S002      column=personal:name, timestamp=..., value=Priya
+ S003      column=personal:name, timestamp=..., value=Ravi
+ S004      column=personal:name, timestamp=..., value=Divya
+ S005      column=personal:name, timestamp=..., value=Kiran
+ S006      column=personal:name, timestamp=..., value=Meena
+6 row(s)
+
+-- STARTROW is inclusive, STOPROW is exclusive, so rows S002, S003
+2 row(s)
+
+6 row(s)
+=&gt; 6</pre></div></div>
+  <ul>
+    <li><code>scan 'student', {COLUMNS =&gt; ['academic']}</code> returns only the academic family columns.</li>
+    <li><strong>Update</strong>: there is no UPDATE command. Run <code>put</code> again on the same cell, which writes a new version with a newer timestamp: <code>put 'student','S001','personal:age','22'</code>.</li>
+  </ul>
+
+  <div class="pair"><div class="code"><span class="tag">delete a cell / deleteall a row</span><pre>delete 'student','S001','personal:city'
+deleteall 'student','S001'
+get 'student','S001'</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Took 0.0120 seconds      -- delete: no rows printed
+Took 0.0095 seconds      -- deleteall: no rows printed
+COLUMN            CELL
+0 row(s)                 -- get: S001 no longer exists</pre></div></div>
+
+  <h4>Versions and timestamps</h4>
+  <div class="pair"><div class="code"><span class="tag">HBase shell (personal created with VERSIONS =&gt; 3)</span><pre>put 'student','S001','personal:name','Arun'
+put 'student','S001','personal:name','Arunkumar'
+put 'student','S001','personal:name','Arun Kumar'
+get 'student','S001', {COLUMN =&gt; 'personal:name', VERSIONS =&gt; 3}</pre></div>
+  <div class="out"><span class="tag">Output (newest first)</span><pre>COLUMN              CELL
+ personal:name      timestamp=1720000090000, value=Arun Kumar
+ personal:name      timestamp=1720000050000, value=Arunkumar
+ personal:name      timestamp=1720000000000, value=Arun
+1 row(s)</pre></div></div>
+  <p class="small">A cell is identified by Row key + Column family + Qualifier + Timestamp. A plain <code>get</code> returns only the latest version.</p>
+
+  <h3>Filters (server-side, reduce network traffic)</h3>
+  <div class="tbl"><table>
+    <tr><th>Filter</th><th>Purpose</th><th>Example</th></tr>
+    <tr><td>RowFilter</td><td>Filter on the row key</td><td><code>"RowFilter(=, 'binary:S003')"</code></td></tr>
+    <tr><td>PrefixFilter</td><td>Row keys starting with a prefix</td><td><code>"PrefixFilter('S00')"</code></td></tr>
+    <tr><td>ColumnPrefixFilter</td><td>Column qualifiers starting with a prefix</td><td><code>"ColumnPrefixFilter('name')"</code></td></tr>
+    <tr><td>ValueFilter</td><td>Cells whose value matches, in any column</td><td><code>"ValueFilter(=, 'binary:Chennai')"</code></td></tr>
+    <tr><td>SingleColumnValueFilter</td><td>Whole rows where one column matches (like SQL WHERE)</td><td><code>"SingleColumnValueFilter('academic','department',=,'binary:CSE')"</code></td></tr>
+    <tr><td>FamilyFilter</td><td>Cells from a matching column family</td><td><code>"FamilyFilter(=, 'binary:academic')"</code></td></tr>
+    <tr><td>QualifierFilter</td><td>Cells with a matching qualifier name</td><td><code>"QualifierFilter(=, 'binary:city')"</code></td></tr>
+    <tr><td>FilterList</td><td>Combine filters with AND / OR</td><td><code>"FilterList(AND, f1, f2)"</code></td></tr>
+  </table></div>
+  <p><strong>Comparators:</strong> <code>binary:</code> means an exact byte match. <code>substring:</code> means "contains", like SQL <code>LIKE '%x%'</code>.</p>
+
+  <div class="pair"><div class="code"><span class="tag">Q: Students whose department is CSE</span><pre>scan 'student', {FILTER =&gt; "SingleColumnValueFilter('academic','department',=,'binary:CSE')"}</pre></div>
+  <div class="out"><span class="tag">Output (full rows; S001 shown in full)</span><pre>ROW     COLUMN+CELL
+ S001   column=academic:cgpa, timestamp=..., value=8.5
+ S001   column=academic:department, timestamp=..., value=CSE
+ S001   column=personal:city, timestamp=..., value=Chennai
+ S001   column=personal:name, timestamp=..., value=Arun
+ S003   ... (Ravi, Chennai, CSE, 7.8)
+ S006   ... (Meena, Chennai, CSE, 9.3)
+3 row(s)</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">Q: Only row S003 / cells with value Chennai / name columns</span><pre>scan 'student', {FILTER =&gt; "RowFilter(=, 'binary:S003')"}
+scan 'student', {FILTER =&gt; "ValueFilter(=, 'binary:Chennai')"}
+scan 'student', {FILTER =&gt; "ColumnPrefixFilter('name')"}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>S003 (all 4 cells)                              1 row(s)
+
+ S001   column=personal:city, ..., value=Chennai
+ S003   column=personal:city, ..., value=Chennai
+ S006   column=personal:city, ..., value=Chennai   3 row(s)
+
+personal:name of S001…S006 (Arun, Priya, Ravi,
+Divya, Kiran, Meena)                            6 row(s)</pre></div></div>
+  <p class="small">ValueFilter returns <strong>only the matching cells</strong>. SingleColumnValueFilter returns the <strong>whole row</strong>. This difference is a common question.</p>
+
+  <div class="pair"><div class="code"><span class="tag">Q: Family / qualifier / prefix filters</span><pre>scan 'student', {FILTER =&gt; "FamilyFilter(=, 'binary:academic')"}
+scan 'student', {FILTER =&gt; "QualifierFilter(=, 'binary:city')"}
+scan 'customers', {FILTER =&gt; "PrefixFilter('cust_')"}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>academic:cgpa + academic:department of all rows     6 row(s)
+personal:city of all rows                           6 row(s)
+only rows whose key starts with cust_</pre></div></div>
+
+  <h4>Operators in filters</h4>
+  <div class="tbl"><table>
+    <tr><th>Type</th><th>Operators</th><th>How in HBase</th></tr>
+    <tr><td>Comparison / relational</td><td><code>=  !=  &gt;  &lt;  &gt;=  &lt;=</code></td><td>SingleColumnValueFilter</td></tr>
+    <tr><td>Logical</td><td>AND, OR (NOT via <code>!=</code>)</td><td>FilterList(AND, …) / FilterList(OR, …)</td></tr>
+    <tr><td>Arithmetic</td><td>+ − * / %</td><td><strong>Not supported directly.</strong> Rearrange the condition: CGPA + 0.5 &gt; 9.0 becomes CGPA &gt; 8.5</td></tr>
+  </table></div>
+
+  <div class="pair"><div class="code"><span class="tag">Q: CSE students who live in Chennai (AND)</span><pre>scan 'student', {
+  FILTER =&gt; "FilterList(AND,
+    SingleColumnValueFilter('academic','department',=,'binary:CSE'),
+    SingleColumnValueFilter('personal','city',=,'binary:Chennai'))"
+}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>S001 (Arun), S003 (Ravi), S006 (Meena)    3 row(s)</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">Q: CSE or IT (OR) · Not CSE (!=)</span><pre>scan 'student', {FILTER =&gt; "FilterList(OR,
+    SingleColumnValueFilter('academic','department',=,'binary:CSE'),
+    SingleColumnValueFilter('academic','department',=,'binary:IT'))"}
+
+scan 'student', {FILTER =&gt; "SingleColumnValueFilter('academic','department',!=,'binary:CSE')"}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>S001, S002, S003, S005, S006     5 row(s)
+
+S002 (IT), S004 (ECE), S005 (IT) 3 row(s)</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">Q: CGPA greater than 8.8</span><pre>scan 'student', {FILTER =&gt; "SingleColumnValueFilter('academic','cgpa',&gt;,'binary:8.8')"}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>S002 (9.1), S004 (8.9), S006 (9.3)   3 row(s)</pre></div></div>
+  <div class="warn"><b class="lbl">Byte comparison</b>
+    <p>Values are bytes, so <code>&gt;</code> compares <strong>lexicographically</strong>, not numerically. It works here only because all CGPAs have the same format (d.d). For "10.0" vs "9.5" it would be wrong. That is why the slides zero-pad values (<code>08.8</code>) in a table named <code>student_num</code>.</p>
+  </div>
+
+  <div class="pair"><div class="code"><span class="tag">Q: (CSE and CGPA &gt; 8.5) OR (IT and CGPA &gt; 9.0)</span><pre>scan 'student_num', {
+  FILTER =&gt; "FilterList(OR,
+    FilterList(AND,
+      SingleColumnValueFilter('academic','department',=,'binary:CSE'),
+      SingleColumnValueFilter('academic','cgpa',&gt;,'binary:08.5')),
+    FilterList(AND,
+      SingleColumnValueFilter('academic','department',=,'binary:IT'),
+      SingleColumnValueFilter('academic','cgpa',&gt;,'binary:09.0')))"
+}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>S002 (IT, 9.1), S006 (CSE, 9.3)    2 row(s)</pre></div></div>
+  <p class="small">S001 has a CGPA of exactly 8.5, which is not greater than 8.5, so it is excluded.</p>
+
+  <h3>Namespaces (like a database in an RDBMS)</h3>
+  <p>A namespace is a logical group of tables. It supports multi-tenancy, security isolation and quotas. The built-in namespaces are <code>hbase</code> (system tables) and <code>default</code>.</p>
+  <div class="pair"><div class="code"><span class="tag">HBase shell</span><pre>list_namespace
+create_namespace 'company'
+create 'company:employee', 'personal', 'job'
+list_namespace_tables 'company'
+describe_namespace 'company'
+alter_namespace 'company', {METHOD =&gt; 'set', 'REGION_REPLICATION' =&gt; '2'}
+disable 'company:employee'
+drop 'company:employee'
+drop_namespace 'company'          <span class="c"># only when it has no tables</span></pre></div>
+  <div class="out"><span class="tag">Output (key lines)</span><pre>NAMESPACE
+default
+hbase
+2 row(s)
+
+=&gt; Hbase::Table - company:employee
+
+TABLE
+employee
+1 row(s)
+
+DESCRIPTION
+{NAME =&gt; 'company'}
+1 row(s)</pre></div></div>
+
+  <h3>Advanced concepts</h3>
+  <h4>Row-key design</h4>
+  <p>A good row key is <strong>unique</strong>, supports the most common queries, <strong>avoids concentrating writes in one region</strong>, is reasonably <strong>short</strong>, and keeps a useful order for range scans. Rows are stored sorted lexicographically: S001, S002, S003…</p>
+  <div class="tbl"><table>
+    <tr><th>Pattern</th><th>Example</th><th>Use / problem</th></tr>
+    <tr><td>Sequential</td><td>S001, S002, S003</td><td>Easy direct lookups, <strong>but causes hotspotting</strong> because new rows always land at the end of the key range</td></tr>
+    <tr><td>Composite</td><td>CSE#S001, IT#S004</td><td>When queries use more than one attribute (dept + id)</td></tr>
+    <tr><td>Reverse timestamp</td><td>C001#(Long.MAX_VALUE − ts)</td><td>Latest records come first</td></tr>
+    <tr><td>Hash-based</td><td>A7#S001, B2#S002</td><td>A hash prefix spreads writes across regions</td></tr>
+  </table></div>
+  <h4>Hotspotting</h4>
+  <p>Too many reads or writes go to one region or RegionServer while the others sit idle. The effects are uneven writes, high load on one server, increased latency, poor cluster utilisation and lower overall performance.</p>
+  <h4>Salting</h4>
+  <p>Add a calculated prefix (salt) to the row key, for example <code>hash(S001) % 10</code> giving <code>7#S001</code>. Rows then spread across regions.</p>
+  <div class="pair"><div class="code"><span class="tag">HBase shell</span><pre>create 'student_salted', 'personal', 'academic'
+put 'student_salted', '7#S001', 'personal:name', 'Arun'
+put 'student_salted', '2#S002', 'personal:name', 'Priya'
+put 'student_salted', '4#S003', 'personal:name', 'Ravi'
+get 'student_salted', '7#S001'     <span class="c"># app must recompute the salt</span></pre></div>
+  <div class="out"><span class="tag">Output</span><pre>COLUMN              CELL
+ personal:name      timestamp=..., value=Arun
+1 row(s)</pre></div></div>
+  <div class="tbl"><table>
+    <tr><th>Advantages of salting</th><th>Disadvantages</th></tr>
+    <tr><td>Distributes writes across regions</td><td>Row keys are less readable</td></tr>
+    <tr><td>Reduces hotspotting</td><td>An exact lookup needs the salt to be calculated</td></tr>
+    <tr><td>Improves parallelism</td><td>Range scans become complicated (several scans needed)</td></tr>
+  </table></div>
+  <h4>Bloom filter</h4>
+  <p>A space-efficient <strong>probabilistic</strong> structure that tells whether a row <strong>may</strong> be in an HFile. Its answers are "<strong>definitely not present</strong>", so HBase skips that HFile, or "<strong>possibly present</strong>", so HBase reads the HFile. It never says "definitely present". Example: an HFile holds S001, S003, S005, S007. A request for S004 gets "definitely not", so that disk read is avoided.</p>
+  <h4>Compression</h4>
+  <p>Reduces disk space and disk I/O, which speeds up I/O-bound reads and writes. Codecs: NONE, GZIP, Snappy, LZ4, ZSTD.</p>
+  <h4>Replication</h4>
+  <p>Copies data from one HBase <strong>cluster</strong> to another, using the <strong>WAL</strong> to send changes to the peer cluster. It is used for disaster recovery, backup, availability and geo-distribution. Example: <code>put 'student','S003',…</code> on Cluster A shows up on Cluster B shortly after.</p>
+</section>
+
+<!-- ========================= SCALA ========================= -->
+<section class="unit" id="scala">
+  <div class="unit-head"><h2>Scala</h2><span class="qtype">Code + output</span></div>
+
+  <div class="def"><b class="lbl">Definition</b>
+    <p><strong>Scala</strong> ("scalable language") is a high-level language that combines <strong>object-oriented</strong> and <strong>functional</strong> programming. It was developed by <strong>Martin Odersky</strong> and released in <strong>2003</strong>. It runs on the <strong>JVM</strong>, so it can use Java code, and Spark itself is written in Scala.</p>
+  </div>
+  <h3>Features</h3>
+  <ul>
+    <li><strong>Pure object-oriented</strong>: every value is an object.</li>
+    <li><strong>Functional</strong>: every function is a value, so functions can be passed around and returned.</li>
+    <li><strong>Statically typed with a dynamic feel</strong>, thanks to type inference.</li>
+    <li>Runs on the JVM and can execute Java code. Supports concurrent and synchronised processing.</li>
+  </ul>
+  <h3>Basic terms and syntax rules</h3>
+  <ul>
+    <li><strong>Object</strong>: has state and behaviour. <strong>Class</strong>: a blueprint. <strong>Method</strong>: a behaviour. <strong>Fields</strong>: instance variables.</li>
+    <li><strong>Closure</strong>: a function whose result depends on a variable declared <em>outside</em> it.</li>
+    <li><strong>Trait</strong>: holds method and field definitions that can be mixed into classes. It is like a Java interface that can contain code.</li>
+    <li>Scala is case-sensitive. Class names start with <strong>Upper</strong> case and methods with <strong>lower</strong> case.</li>
+    <li>The file name must match the object name, e.g. <code>HelloWorld.scala</code>. Execution starts at <code>def main(args: Array[String])</code>.</li>
+    <li>Execution modes: <strong>interactive</strong> (REPL, <code>scala&gt;</code>) and <strong>script</strong> (compile and run the object).</li>
+    <li>Keywords include: abstract, case, catch, class, def, do, else, extends, false, final, finally, for, if, implicit, import, lazy, match, new, null, object, override, package, private, protected, return, sealed, super, this, throw, trait, try, true, type, val, var, while, with, yield.</li>
+  </ul>
+
+  <h3>Hello World and the first program</h3>
+  <div class="pair"><div class="code"><span class="tag">Scala</span><pre>object HelloWorld {
+  def main(args: Array[String]): Unit = {
+    println("Hello, world!")   // prints Hello World
+  }
+}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Hello, world!</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">Scala</span><pre>object BasicScala {
+  def main(args: Array[String]): Unit = {
+    var a: Int = 10
+    var b: Int = 20
+    val sum = a + b
+    println("Value of a = " + a)
+    println("Value of b = " + b)
+    println("Sum = " + sum)
+  }
+}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Value of a = 10
+Value of b = 20
+Sum = 30</pre></div></div>
+  <ul class="small">
+    <li><code>object</code> defines a <strong>singleton</strong> object, used for the main program, utility methods and shared functions.</li>
+    <li><code>def</code> defines a method. <code>args: Array[String]</code> holds the command-line arguments: <code>scala BasicScala 10 20</code> gives <code>args(0) = "10"</code>.</li>
+    <li><code>Unit</code> means no return value, like void.</li>
+  </ul>
+
+  <h3>val vs var, data types</h3>
+  <div class="tbl"><table>
+    <tr><th>Feature</th><th>val</th><th>var</th></tr>
+    <tr><td>Reassign?</td><td>No (immutable)</td><td>Yes (mutable)</td></tr>
+    <tr><td>Preferred in FP?</td><td>Yes</td><td>Avoid when possible</td></tr>
+    <tr><td>Example</td><td><code>val x = 10</code></td><td><code>var x = 10</code></td></tr>
+  </table></div>
+  <div class="tbl"><table>
+    <tr><th>Type</th><th>Example</th><th>Type</th><th>Example</th></tr>
+    <tr><td>Byte</td><td>125</td><td>Float</td><td>10.5f</td></tr>
+    <tr><td>Short</td><td>32767</td><td>Double</td><td>10.5</td></tr>
+    <tr><td>Int</td><td>10</td><td>Boolean</td><td>true</td></tr>
+    <tr><td>Long</td><td>100000L</td><td>Char</td><td>'A'</td></tr>
+    <tr><td>String</td><td>"Scala"</td><td>Unit</td><td>()</td></tr>
+  </table></div>
+  <ul>
+    <li><strong>Explicit type:</strong> <code>val age: Int = 20</code>. <strong>Type inference:</strong> <code>val age = 20</code>, and Scala infers <code>age: Int</code>. <code>val x = 10 + 20</code> gives <code>x: Int</code>.</li>
+    <li><strong>Static typing:</strong> types are checked at <strong>compile time</strong>. <code>val age: Int = "twenty"</code> is a compile error (type mismatch).</li>
+    <li><strong>Type inference is not dynamic typing.</strong> Given <code>val x = 10</code>, the line <code>x = "Hello"</code> fails for two reasons: x is a <code>val</code> and can't be reassigned, and x is an <code>Int</code>, not a String.</li>
+    <li><strong>Value type:</strong> describes ordinary data values. In <code>val age: Int = 20</code>, 20 is an Int value.</li>
+  </ul>
+
+  <div class="pair"><div class="code"><span class="tag">Type casting, Boolean, Char</span><pre>object MainObject {
+  def main(args: Array[String]) {
+    val integerValue: Int = 10
+    val doubleValue: Double = integerValue.toDouble
+    println(integerValue)
+    println(doubleValue)
+
+    val isTrue: Boolean = true
+    println(isTrue)
+
+    val char: Char = 'a'
+    println(char.isLetter)
+    println(char.isDigit)
+    println(char.toUpper)
+  }
+}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>10
+10.0
+true
+true
+false
+A</pre></div></div>
+
+  <h3>Classes, constructors and methods</h3>
+  <div class="pair"><div class="code"><span class="tag">Scala</span><pre>class Student {
+  var name: String = ""
+  var age: Int = 0
+}
+val s1 = new Student()
+s1.name = "Arun"
+s1.age = 20
+println(s1.name)
+println(s1.age)</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Arun
+20</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">Student management (class + object + methods)</span><pre>class Student(val name: String, val marks: Int) {
+  def display(): Unit = {
+    println("Student Name: " + name)
+    println("Marks: " + marks)
+  }
+  def getResult(): String = {
+    if (marks &gt;= 40) "Pass" else "Fail"
+  }
+}
+object StudentApp {
+  def main(args: Array[String]): Unit = {
+    val s1 = new Student("Arun", 75)
+    s1.display()
+    val result = s1.getResult()
+    println("Result: " + result)
+  }
+}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Student Name: Arun
+Marks: 75
+Result: Pass</pre></div></div>
+  <p class="small">Method syntax: <code>def add(a: Int, b: Int): Int = { a + b }</code>. Here <code>def</code> defines it, a and b are parameters of type Int, <code>: Int</code> is the return type, and the <strong>last expression is returned automatically</strong>, so <code>return</code> isn't needed. One-line form: <code>def square(x: Int): Int = x * x</code>.</p>
+
+  <h3>Input and output</h3>
+  <div class="pair"><div class="code"><span class="tag">Scala (user types 12 then 8)</span><pre>object InputExample {
+  def main(args: Array[String]): Unit = {
+    print("Enter first number: ")
+    val a = scala.io.StdIn.readInt()
+    print("Enter second number: ")
+    val b = scala.io.StdIn.readInt()
+    println("Sum = " + (a + b))
+  }
+}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Enter first number: 12
+Enter second number: 8
+Sum = 20</pre></div></div>
+  <p class="small">Use <code>scala.io.StdIn.readLine()</code> for text. <code>print</code> stays on the same line; <code>println</code> adds a newline.</p>
+
+  <h3>Strings and arrays</h3>
+  <div class="pair"><div class="code"><span class="tag">Scala</span><pre>var greeting: String = "Hello world!"
+var z: Array[String] = new Array[String](3)   // or: var z = new Array[String](3)
+var names = Array("Zara", "Nuha", "Ayan")
+println(greeting)
+println(names(1))</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Hello world!
+Nuha</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">Array methods (important program)</span><pre>object ArrayExample {
+  def main(args: Array[String]): Unit = {
+    val numbers = Array(10, 20, 30, 40, 50)
+    println("Length = " + numbers.length)
+    println("Sum = " + numbers.sum)
+    println("Maximum = " + numbers.max)
+    println("Minimum = " + numbers.min)
+    println("Contains 30 = " + numbers.contains(30))
+    println("Squares:")
+    val squares = numbers.map(x =&gt; x * x)
+    squares.foreach(println)
+    println("Even numbers:")
+    val even = numbers.filter(x =&gt; x % 2 == 0)
+    even.foreach(println)
+  }
+}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Length = 5
+Sum = 150
+Maximum = 50
+Minimum = 10
+Contains 30 = true
+Squares:
+100
+400
+900
+1600
+2500
+Even numbers:
+10
+20
+30
+40
+50</pre></div></div>
+  <p class="small">Other array methods: <code>a.sorted</code>, <code>a.reverse</code>, <code>a(0)</code> for index access. Indexes start at 0, so <code>numbers(0)</code> is 10 and <code>numbers(3)</code> is 40.</p>
+
+  <h3>Conditions</h3>
+  <div class="pair"><div class="code"><span class="tag">if-else, else-if ladder, nested if, if as an expression</span><pre>val age = 16
+if (age &gt;= 18) println("Eligible") else println("Not eligible")
+
+val mark = 75
+if (mark &gt;= 90) println("Grade A")
+else if (mark &gt;= 75) println("Grade B")
+else if (mark &gt;= 50) println("Grade C")
+else println("Fail")
+
+val age2 = 25
+val salary = 30000
+if (age2 &gt;= 18) {
+  if (salary &gt;= 25000) println("Eligible") else println("Salary is too low")
+} else println("Age is too low")
+
+val result = if (mark &gt;= 40) "Pass" else "Fail"
+println(result)</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Not eligible
+Grade B
+Eligible
+Pass</pre></div></div>
+  <p class="small">Operators: <code>== != &gt; &lt; &gt;= &lt;=</code>, plus <code>&amp;&amp;</code> (AND), <code>||</code> (OR) and <code>!</code> (NOT).</p>
+
+  <h3>Loops</h3>
+  <div class="pair"><div class="code"><span class="tag">for / until / with condition / over an array</span><pre>for (i &lt;- 1 to 5) print(i + " ")
+println()
+for (i &lt;- 1 until 5) print(i + " ")
+println()
+for (i &lt;- 1 to 10 if i % 2 == 0) print(i + " ")
+println()
+val numbers = Array(10, 20, 30)
+for (num &lt;- numbers) print(num + " ")</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>1 2 3 4 5
+1 2 3 4
+2 4 6 8 10
+10 20 30</pre></div></div>
+  <p class="small"><code>1 to 5</code> includes 5. <code>1 until 5</code> excludes 5. In the slide versions, which use <code>println(i)</code>, each number goes on its own line.</p>
+
+  <div class="pair"><div class="code"><span class="tag">while and do-while</span><pre>var i = 1
+while (i &lt;= 5) {
+  println(i)
+  i = i + 1
+}
+
+var j = 10
+do {
+  println(j)
+  j = j + 1
+} while (j &lt;= 5)</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>1
+2
+3
+4
+5
+10</pre></div></div>
+  <p class="small">The do-while printed <strong>10</strong> even though the condition is false, because its body always runs <strong>at least once</strong>. This is the key difference from while. In Scala 3, <code>do-while</code> was dropped; this syntax is Scala 2, which is what your slides use.</p>
+
+  <h3>Functions</h3>
+  <div class="pair"><div class="code"><span class="tag">No parameters / with parameters / returning a value</span><pre>object FunctionExample {
+  def greet(): Unit = println("Hello, Welcome to Scala!")
+  def greet(name: String): Unit = println("Hello " + name)
+  def add(a: Int, b: Int): Int = { a + b }
+  def square(x: Int): Int = x * x
+
+  def main(args: Array[String]): Unit = {
+    greet()
+    greet("Ravi")
+    greet("Priya")
+    println("Sum = " + add(10, 20))
+    println("Square = " + square(5))
+  }
+}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Hello, Welcome to Scala!
+Hello Ravi
+Hello Priya
+Sum = 30
+Square = 25</pre></div></div>
+
+  <h4>Function types (functions are values)</h4>
+  <div class="pair"><div class="code"><span class="tag">Scala</span><pre>val square = (x: Int) =&gt; x * x                    // type: Int =&gt; Int
+val add: (Int, Int) =&gt; Int = (x: Int, y: Int) =&gt; x + y
+val length: String =&gt; Int = (s: String) =&gt; s.length
+val isEven: Int =&gt; Boolean = (x: Int) =&gt; x % 2 == 0
+println(square(4))
+println(add(3, 7))
+println(length("Scala"))
+println(isEven(10))</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>16
+10
+5
+true</pre></div></div>
+  <p class="small">Read <code>Int =&gt; Int</code> as "a function from Int to Int". <code>(Int, Int) =&gt; Int</code> takes two Ints and returns an Int.</p>
+
+  <h4>Closure</h4>
+  <div class="pair"><div class="code"><span class="tag">Scala</span><pre>val multiplier = 10
+val multiply = (x: Int) =&gt; x * multiplier
+println(multiply(5))
+
+def makeMultiplier(n: Int): Int =&gt; Int = x =&gt; x * n
+val triple = makeMultiplier(3)
+println(triple(7))</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>50
+21</pre></div></div>
+  <p class="small"><code>multiply</code> uses its parameter <code>x</code> and also <code>multiplier</code>, which is defined <em>outside</em> the function. It "closes over" that variable, which is why it is called a closure.</p>
+
+  <h4>Higher-order functions and anonymous functions</h4>
+  <p>A <strong>higher-order function</strong> takes a function as a parameter and/or returns a function. Syntax: <code>def hof(f: (Type1, Type2) =&gt; ReturnType): ReturnType = …</code>. An <strong>anonymous function</strong> (lambda) has no name, for example <code>x =&gt; x * x</code>.</p>
+  <div class="pair"><div class="code"><span class="tag">Scala</span><pre>object HigherOrderExample {
+  def square(x: Int): Int = x * x
+  def calculate(x: Int, f: Int =&gt; Int): Int = f(x)
+
+  def main(args: Array[String]): Unit = {
+    val result = calculate(5, square)
+    println("Result = " + result)
+    println(calculate(5, x =&gt; x * x))      // anonymous function
+    println(calculate(5, x =&gt; x + 100))
+  }
+}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Result = 25
+25
+105</pre></div></div>
+
+  <h3>Collections</h3>
+  <p>List, Set, Map, Array, Tuple, Vector, Range. Sequences are List, Vector and Array.</p>
+  <div class="pair"><div class="code"><span class="tag">List</span><pre>val numbers = List(10, 20, 30, 40, 50)
+println(numbers)
+println(numbers.head)
+println(numbers.tail)
+println(numbers.length)
+println(numbers.sum)
+println(numbers.max)
+println(numbers.min)</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>List(10, 20, 30, 40, 50)
+10
+List(20, 30, 40, 50)
+5
+150
+50
+10</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">map, filter, foreach, reduce, sorted</span><pre>val n = List(1, 2, 3, 4, 5, 6)
+println(n.map(x =&gt; x * x))
+println(n.filter(x =&gt; x % 2 == 0))
+println(List(1, 2, 3).map(x =&gt; x * 2))
+println(List(1, 2, 3).filter(x =&gt; x &gt; 1))
+List(10, 20, 30).foreach(x =&gt; println(x))
+println(List(1, 2, 3, 4).reduce((a, b) =&gt; a + b))
+println(List(5, 2, 8, 1, 3).sorted)</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>List(1, 4, 9, 16, 25, 36)
+List(2, 4, 6)
+List(2, 4, 6)
+List(2, 3)
+10
+20
+30
+10
+List(1, 2, 3, 5, 8)</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">Map, Set and Tuple</span><pre>val students = Map(101 -&gt; "Arun", 102 -&gt; "Priya", 103 -&gt; "Kumar")
+println(students(101))
+println(students.contains(102))
+println(students.keys)
+
+val s = Set(1, 2, 2, 3)
+println(s)
+
+val student = ("Arun", 20, 85.5)
+println(student)
+println(student._1)
+println(student._2)
+println(student._3)</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Arun
+true
+Set(101, 102, 103)
+Set(1, 2, 3)
+(Arun,20,85.5)
+Arun
+20
+85.5</pre></div></div>
+  <p class="small">A Map stores key → value pairs. A Set removes duplicates. A Tuple holds values of <strong>different types</strong> (String, Int, Double), accessed with <code>._1</code>, <code>._2</code>, …</p>
+
+  <h3>fold, foldLeft, foldRight, partition, span</h3>
+  <div class="pair"><div class="code"><span class="tag">Scala</span><pre>val numbers = List(1, 2, 3, 4, 5)
+println(numbers.fold(0)((a, b) =&gt; a + b))
+println(List(1, 2, 3, 4).foldLeft(0)((sum, x) =&gt; sum + x))
+println(List(1, 2, 3, 4).foldRight(0)((x, sum) =&gt; x + sum))
+println(List(1, 2, 3, 4, 5, 6).partition(x =&gt; x % 2 == 0))
+println(List(2, 4, 6, 7, 8, 10).span(x =&gt; x % 2 == 0))</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>15
+10
+10
+(List(2, 4, 6),List(1, 3, 5))
+(List(2, 4, 6),List(7, 8, 10))</pre></div></div>
+  <ul class="small">
+    <li><strong>fold</strong> starts from an initial value: 0 → 1 → 3 → 6 → 10 → 15.</li>
+    <li><strong>foldLeft</strong>: <code>(((0+1)+2)+3)+4</code>, left to right. <strong>foldRight</strong>: <code>1+(2+(3+(4+0)))</code>, right to left.</li>
+    <li><strong>partition</strong> checks <em>every</em> element and returns (true list, false list).</li>
+    <li><strong>span</strong> takes elements from the start <em>while</em> the condition holds and stops at the first failure (7). Everything after that, including 8 and 10, goes to the second list.</li>
+  </ul>
+
+  <h3>MapReduce template in Scala</h3>
+  <div class="pair"><div class="code"><span class="tag">Scala</span><pre>val result = List(1, 2, 3, 4, 5)
+  .map(x =&gt; x * x)
+  .reduce((a, b) =&gt; a + b)
+println(result)
+
+val result2 = List(2, 4, 6, 8)
+  .map(x =&gt; x * 2)
+  .reduce((a, b) =&gt; a + b)
+println(result2)</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>55
+40</pre></div></div>
+  <p class="small">Trace: 1,2,3,4,5, then <strong>map</strong> gives 1,4,9,16,25, then <strong>reduce</strong> gives 55. Second: 2,4,6,8 maps to 4,8,12,16, which reduces to 40. Template: <code>collection.map(x =&gt; transformation).reduce((a, b) =&gt; combination)</code>.</p>
+
+  <h3>Pattern matching (like switch, but more powerful)</h3>
+  <div class="pair"><div class="code"><span class="tag">Scala</span><pre>val day = 2
+day match {
+  case 1 =&gt; println("Monday")
+  case 2 =&gt; println("Tuesday")
+  case 3 =&gt; println("Wednesday")
+  case _ =&gt; println("Invalid day")
+}
+
+def checkNumber(x: Int): String = x match {
+  case x if x &gt; 0 =&gt; "Positive"
+  case x if x &lt; 0 =&gt; "Negative"
+  case _ =&gt; "Zero"
+}
+println(checkNumber(10))
+println(checkNumber(-5))
+println(checkNumber(0))
+
+List(10, 20, 30) match {
+  case Nil =&gt; println("Empty List")
+  case head :: tail =&gt;
+    println("First element = " + head)
+    println("Remaining elements = " + tail)
+}
+
+case class Student(name: String, marks: Int)
+Student("Arun", 75) match {
+  case Student(name, marks) =&gt;
+    println("Name = " + name)
+    println("Marks = " + marks)
+}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Tuesday
+Positive
+Negative
+Zero
+First element = 10
+Remaining elements = List(20, 30)
+Name = Arun
+Marks = 75</pre></div></div>
+  <p class="small"><code>case _</code> is the default (wildcard). <code>head :: tail</code> splits a list into its first element and the rest. A case class can be "destructured" in a match.</p>
+
+  <h3>Generics</h3>
+  <div class="pair"><div class="code"><span class="tag">Scala</span><pre>object GenericExample {
+  def display[T](value: T): Unit = println(value)
+
+  class Box[T](value: T) {
+    def show(): Unit = println(value)
+  }
+
+  def main(args: Array[String]): Unit = {
+    display(100)
+    display("Scala")
+    display(25.5)
+    val intBox = new Box[Int](100)
+    val stringBox = new Box[String]("Hello")
+    intBox.show()
+    stringBox.show()
+  }
+}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>100
+Scala
+25.5
+100
+Hello</pre></div></div>
+  <p class="small"><code>[T]</code> is a type parameter. One function or class works for Int, String, Double and other types, so you don't write separate <code>printInt</code> and <code>printString</code>.</p>
+
+  <h3>Recursive collection: ConsList</h3>
+  <div class="pair"><div class="code"><span class="tag">Scala</span><pre>object SimpleConsList {
+  sealed trait ConsList
+  case object Empty extends ConsList
+  case class Cons(head: Int, tail: ConsList) extends ConsList
+
+  def sum(list: ConsList): Int = list match {
+    case Empty =&gt; 0
+    case Cons(head, tail) =&gt; head + sum(tail)
+  }
+
+  def main(args: Array[String]): Unit = {
+    val numbers = Cons(10, Cons(20, Cons(30, Empty)))   // 10 → 20 → 30 → Empty
+    println("Sum = " + sum(numbers))
+  }
+}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Sum = 60</pre></div></div>
+  <p class="small">Trace: 10 + sum(20,30) = 10 + 20 + sum(30) = 10 + 20 + 30 + sum(Empty) = 10 + 20 + 30 + 0 = <strong>60</strong>. It is recursive in two ways: the data structure contains itself (tail is a ConsList), and the function calls itself (<code>sum(tail)</code>). Scala's built-in List works the same way: <code>1 :: 2 :: Nil</code>.</p>
+
+  <h3>Tail recursion</h3>
+  <p>In <strong>tail recursion</strong>, the recursive call is the <strong>last operation</strong> in the function. Scala applies <strong>Tail Call Optimisation</strong>, turning it into a loop with constant stack space, so there is no StackOverflowError. The <code>@tailrec</code> annotation makes the compiler raise an error if the call is not in tail position.</p>
+  <div class="pair"><div class="code"><span class="tag">Normal recursion (NOT tail recursive)</span><pre>def factorial(n: Int): Int =
+  if (n == 0) 1 else n * factorial(n - 1)   // multiply happens AFTER the call</pre></div></div>
+  <div class="pair"><div class="code"><span class="tag">Tail-recursive factorial</span><pre>import scala.annotation.tailrec
+
+object TailRecursionExample {
+  def factorial(n: Int): Int = {
+    @tailrec
+    def calculate(n: Int, result: Int): Int = {
+      if (n == 0) result
+      else calculate(n - 1, result * n)
+    }
+    calculate(n, 1)
+  }
+  def main(args: Array[String]): Unit = {
+    val n = 5
+    println("Factorial of " + n + " = " + factorial(n))
+  }
+}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Factorial of 5 = 120</pre></div></div>
+  <p class="small">Accumulator trace: fact(5,1) → fact(4,5) → fact(3,20) → fact(2,60) → fact(1,120) → fact(0,120) → <strong>120</strong>.</p>
+
+  <h3>Full example from the last slide</h3>
+  <div class="pair"><div class="code"><span class="tag">Scala</span><pre>object FunctionalExample {
+  def calculate(x: Int, f: Int =&gt; Int): Int = f(x)
+  def checkNumber(x: Int): String = x match {
+    case 0 =&gt; "Zero"
+    case x if x &gt; 0 =&gt; "Positive"
+    case _ =&gt; "Negative"
+  }
+  def main(args: Array[String]): Unit = {
+    val square = calculate(5, x =&gt; x * x)
+    println("Square = " + square)
+    val sum = List(1, 2, 3, 4, 5).map(x =&gt; x * x).reduce((a, b) =&gt; a + b)
+    println("Sum of squares = " + sum)
+    println(checkNumber(10))
+    println(checkNumber(-5))
+    println(checkNumber(0))
+  }
+}</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>Square = 25
+Sum of squares = 55
+Positive
+Negative
+Zero</pre></div></div>
+</section>
+
+<!-- ========================= SPARK ========================= -->
+<section class="unit" id="spark">
+  <div class="unit-head"><h2>Apache Spark &amp; PySpark</h2><span class="qtype">Theory + small program</span></div>
+
+  <div class="def"><b class="lbl">Definition</b>
+    <p><strong>Apache Spark</strong> is a fast, general-purpose <strong>distributed data-processing engine</strong> that keeps data <strong>in memory</strong> between steps. It is up to <strong>100× faster</strong> than Hadoop MapReduce, which writes intermediate results to disk. It supports batch processing, interactive queries, streaming, machine learning and graph processing.</p>
+  </div>
+
+  <h3>Features</h3>
+  <ul>
+    <li><strong>Speed</strong>: in-memory DAG execution, up to 100× faster than MR.</li>
+    <li><strong>Powerful caching</strong>: cache and persist to memory or disk.</li>
+    <li><strong>Deployment</strong>: Standalone, Hadoop YARN, Mesos or Kubernetes.</li>
+    <li><strong>Real-time</strong>: low latency thanks to in-memory computation.</li>
+    <li><strong>Polyglot</strong>: Scala, Java, Python (PySpark), R and SQL. Shells: <code>spark-shell</code> (Scala) and <code>pyspark</code> (Python).</li>
+  </ul>
+
+  <h3>Spark modules (ecosystem)</h3>
+  <div class="tbl"><table>
+    <tr><th>Module</th><th>Purpose</th></tr>
+    <tr><td><strong>Spark Core</strong></td><td>Task scheduling, memory management, fault recovery, RDD API</td></tr>
+    <tr><td><strong>Spark SQL</strong></td><td>Structured data, DataFrames, SQL queries, Catalyst optimizer</td></tr>
+    <tr><td><strong>Spark Streaming</strong></td><td>Real-time streams using micro-batches</td></tr>
+    <tr><td><strong>MLlib</strong></td><td>Machine learning: classification, regression, clustering, pipelines</td></tr>
+    <tr><td><strong>GraphX</strong></td><td>Graph processing, e.g. PageRank</td></tr>
+  </table></div>
+
+  <h3>Two main abstractions</h3>
+  <div class="grid2">
+    <div class="card"><h4>RDD: Resilient Distributed Dataset</h4>
+      <ul><li><strong>Resilient</strong>: fault-tolerant. Lost partitions are recomputed from <strong>lineage</strong>, not from replicas.</li>
+      <li><strong>Distributed</strong>: split into <strong>partitions</strong> across nodes and processed in parallel.</li>
+      <li><strong>Dataset</strong>: a collection of records.</li>
+      <li><strong>Immutable</strong>: never changed. Every operation creates a new RDD.</li>
+      <li>Two kinds of operations: <strong>transformations</strong> and <strong>actions</strong>.</li></ul></div>
+    <div class="card"><h4>DAG: Directed Acyclic Graph</h4>
+      <ul><li>The driver turns your program into a DAG of operations for each job.</li>
+      <li>Spark splits the DAG into <strong>stages</strong> at <strong>shuffle boundaries</strong> (wide transformations).</li>
+      <li>Narrow steps like map followed by filter are <strong>pipelined</strong> in one stage.</li>
+      <li>Spark optimises the whole graph before running it.</li></ul></div>
+  </div>
+  <div class="pair"><div class="code"><span class="tag">RDD partitions</span><pre>RDD = [10,20,30,40,50,60]
+Partition 1 → [10,20]     → Task 1
+Partition 2 → [30,40]     → Task 2     (run in parallel)
+Partition 3 → [50,60]     → Task 3</pre></div></div>
+
+  <h3>Architecture (master–worker)</h3>
+  <div class="flow"><span>Driver Program (SparkContext)</span><i>⇄</i><span>Cluster Manager</span><i>⇄</i><span>Worker Nodes → Executors → Tasks</span></div>
+  <div class="tbl"><table>
+    <tr><th>Component</th><th>Role</th></tr>
+    <tr><td><strong>Driver program</strong></td><td>The "brain". Runs <code>main()</code>, creates the SparkSession/SparkContext, builds the DAG and execution plan, splits work into jobs, stages and tasks, sends tasks to executors, and collects the results</td></tr>
+    <tr><td><strong>SparkSession / SparkContext</strong></td><td>Entry point. SparkSession is the modern one (DataFrames, SQL, config). SparkContext (<code>sc</code>) is for Spark Core and RDDs</td></tr>
+    <tr><td><strong>Cluster manager</strong></td><td>Allocates CPU and memory and decides which workers run tasks: Standalone, YARN, Kubernetes or Mesos</td></tr>
+    <tr><td><strong>Worker node</strong></td><td>A machine that provides CPU, memory, storage and network</td></tr>
+    <tr><td><strong>Executor</strong></td><td>A process (JVM) on a worker. It runs tasks, processes partitions, stores cached data and reports status and results to the driver</td></tr>
+    <tr><td><strong>Job</strong></td><td>The full computation triggered by an <strong>action</strong> such as collect, count or save</td></tr>
+    <tr><td><strong>Stage</strong></td><td>A group of tasks that run without a shuffle. A job has one or more stages</td></tr>
+    <tr><td><strong>Task</strong></td><td>The smallest unit of work. <strong>One task per partition</strong></td></tr>
+    <tr><td><strong>Partition</strong></td><td>A logical chunk of an RDD. Enables parallelism</td></tr>
+  </table></div>
+  <p class="small">Flow: User app → Driver creates the execution plan → Cluster Manager allocates resources → Workers' executors run tasks on partitions → results go back to the Driver.</p>
+
+  <h3>Transformations vs actions (most asked)</h3>
+  <div class="tbl"><table>
+    <tr><th></th><th>Transformations</th><th>Actions</th></tr>
+    <tr><td>What</td><td>Create a <strong>new RDD</strong> from an existing one</td><td>Return a result to the driver or write to storage</td></tr>
+    <tr><td>Evaluation</td><td><strong>Lazy</strong>: only recorded in the DAG</td><td><strong>Eager</strong>: trigger execution of the whole DAG</td></tr>
+    <tr><td>Examples</td><td><code>map</code>, <code>filter</code>, <code>flatMap</code>, <code>distinct</code>, <code>union</code>, <code>groupByKey</code>, <code>reduceByKey</code>, <code>sortByKey</code>, <code>mapValues</code>, <code>join</code></td><td><code>collect</code>, <code>count</code>, <code>first</code>, <code>take(n)</code>, <code>reduce</code>, <code>countByKey</code>, <code>saveAsTextFile</code>, <code>foreach</code></td></tr>
+    <tr><td>Returns</td><td>RDD</td><td>A value, a list, or nothing (written to a file)</td></tr>
+  </table></div>
+  <div class="grid2">
+    <div class="card"><h4>Narrow transformation</h4><p>Each output partition depends on <strong>one</strong> input partition, so there is <strong>no shuffle</strong>. Examples: map, filter, flatMap, union.</p></div>
+    <div class="card"><h4>Wide transformation</h4><p>An output partition needs data from <strong>many</strong> partitions, so there is a <strong>shuffle</strong> across the network and a new stage. Examples: groupByKey, reduceByKey, join, distinct, sortByKey.</p></div>
+  </div>
+  <p><strong>Lazy evaluation:</strong> in <code>rdd2 = rdd.filter(...)</code>, then <code>rdd3 = rdd2.map(...)</code>, then <code>rdd3.collect()</code>, nothing runs until <code>collect()</code>. Spark then optimises and runs the whole plan together. The benefits are an optimised plan, fewer passes over the data, and no wasted computation.</p>
+  <p><strong>reduceByKey vs groupByKey:</strong> reduceByKey <strong>combines locally first</strong> (like a MapReduce combiner) and then shuffles less data. groupByKey shuffles <strong>every</strong> value. Prefer reduceByKey for aggregations.</p>
+
+  <h3>Creating RDDs</h3>
+  <div class="pair"><div class="code"><span class="tag">PySpark</span><pre>from pyspark import SparkContext
+sc = SparkContext("local", "Demo")
+# modern way:
+# from pyspark.sql import SparkSession
+# spark = SparkSession.builder.appName("Demo").getOrCreate()
+# sc = spark.sparkContext
+
+rdd1 = sc.parallelize([10, 20, 30, 40, 50])       # 1. from a collection
+rdd2 = sc.textFile("students.txt")                # 2. from a file (HDFS/local)
+rdd3 = rdd1.map(lambda x: x + 1)                  # 3. from another RDD
+print(rdd1.collect())
+print(rdd3.collect())
+print(sc.parallelize([10,20,30,40,50,60], 3).glom().collect())</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>[10, 20, 30, 40, 50]
+[11, 21, 31, 41, 51]
+[[10, 20], [30, 40], [50, 60]]</pre></div></div>
+  <p class="small"><code>glom()</code> shows the contents of each partition, which proves the 3 partitions. In Scala the same thing is <code>val rdd = sc.parallelize(Array(10,20,30,40,50)); rdd.collect()</code>.</p>
+
+  <h3>Basic transformations and actions</h3>
+  <div class="pair"><div class="code"><span class="tag">PySpark</span><pre>rdd = sc.parallelize([1, 2, 3, 4, 5])
+print(rdd.map(lambda x: x * 2).collect())
+print(rdd.filter(lambda x: x % 2 == 0).collect())
+print(rdd.map(lambda x: x * x).collect())
+print(rdd.count())
+print(rdd.first())
+print(rdd.take(3))
+print(rdd.reduce(lambda a, b: a + b))
+print(sc.parallelize([1, 2, 2, 3, 3, 3]).distinct().collect())
+print(sc.parallelize([1, 2]).union(sc.parallelize([3, 4])).collect())</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>[2, 4, 6, 8, 10]
+[2, 4]
+[1, 4, 9, 16, 25]
+5
+1
+[1, 2, 3]
+15
+[1, 2, 3]
+[1, 2, 3, 4]</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">map vs flatMap (classic question)</span><pre>lines = sc.parallelize(["a b", "c d"])
+print(lines.map(lambda s: s.split(" ")).collect())
+print(lines.flatMap(lambda s: s.split(" ")).collect())</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>[['a', 'b'], ['c', 'd']]
+['a', 'b', 'c', 'd']</pre></div></div>
+  <p class="small"><code>map</code> gives exactly one output per input, so you get a list of lists. <code>flatMap</code> gives zero or more outputs per input and flattens them.</p>
+
+  <h3>Lazy evaluation and DAG example</h3>
+  <div class="pair"><div class="code"><span class="tag">PySpark</span><pre>rdd1 = sc.parallelize([1, 2, 3, 4, 5])
+rdd2 = rdd1.filter(lambda x: x &gt; 2)      # lazy: nothing runs
+rdd3 = rdd2.map(lambda x: x * 10)        # lazy: nothing runs
+print(rdd3.collect())                    # action: whole DAG runs now</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>[30, 40, 50]</pre></div></div>
+  <div class="pair"><div class="code"><span class="tag">DAG / lineage (draw this)</span><pre>RDD1 [1,2,3,4,5]
+   │ filter(x &gt; 2)
+RDD2 [3,4,5]
+   │ map(x * 10)
+RDD3 [30,40,50]
+   │ collect()  ← action triggers the job
+ Result</pre></div></div>
+
+  <h3>Word count in PySpark (most important program)</h3>
+  <div class="pair"><div class="code"><span class="tag">input.txt</span><pre>spark is fast
+spark is easy
+hadoop is slow</pre></div></div>
+  <div class="pair"><div class="code"><span class="tag">PySpark</span><pre>lines  = sc.textFile("input.txt")
+words  = lines.flatMap(lambda line: line.split(" "))     # transformation
+pairs  = words.map(lambda word: (word, 1))                # transformation
+counts = pairs.reduceByKey(lambda a, b: a + b)            # transformation (wide)
+print(counts.collect())                                   # action
+print(counts.sortBy(lambda x: x[1], ascending=False).take(2))</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>[('spark', 2), ('is', 3), ('fast', 1), ('easy', 1), ('hadoop', 1), ('slow', 1)]
+[('is', 3), ('spark', 2)]</pre></div></div>
+  <p class="small">The order of <code>collect()</code> after reduceByKey can differ between runs. Step by step: flatMap gives ['spark','is','fast','spark',…], map gives ('spark',1), ('is',1), …, and reduceByKey adds up the 1s per word.</p>
+
+  <h3>Pair RDDs (key, value)</h3>
+  <div class="tbl"><table>
+    <tr><th>Operation</th><th>Purpose</th></tr>
+    <tr><td>reduceByKey(f)</td><td>Aggregate the values of each key, combining locally first</td></tr>
+    <tr><td>groupByKey()</td><td>Group all values of each key (heavy shuffle)</td></tr>
+    <tr><td>sortByKey()</td><td>Sort by key</td></tr>
+    <tr><td>mapValues(f)</td><td>Transform only the values, keeping the keys</td></tr>
+    <tr><td>join(other)</td><td>Inner join two pair RDDs on the key</td></tr>
+    <tr><td>combineByKey()</td><td>Generic custom aggregation (reduceByKey is built on it)</td></tr>
+    <tr><td>countByKey()</td><td>Action: number of elements per key</td></tr>
+  </table></div>
+  <div class="pair"><div class="code"><span class="tag">PySpark</span><pre>dept = sc.parallelize([("CSE", 80), ("CSE", 90), ("ECE", 75), ("ECE", 85)])
+print(dept.reduceByKey(lambda a, b: a + b).collect())
+
+marks = sc.parallelize([("A", 80), ("B", 70), ("A", 90), ("B", 85)])
+print(marks.reduceByKey(lambda a, b: a + b).collect())
+print(marks.groupByKey().mapValues(list).collect())
+print(marks.mapValues(lambda v: v + 5).collect())
+print(marks.sortByKey().collect())
+print(marks.countByKey())
+
+names = sc.parallelize([("A", "Arun"), ("B", "Bala")])
+print(marks.join(names).collect())</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>[('CSE', 170), ('ECE', 160)]
+[('A', 170), ('B', 155)]
+[('A', [80, 90]), ('B', [70, 85])]
+[('A', 85), ('B', 75), ('A', 95), ('B', 90)]
+[('A', 80), ('A', 90), ('B', 70), ('B', 85)]
+defaultdict(&lt;class 'int'&gt;, {'A': 2, 'B': 2})
+[('A', (80, 'Arun')), ('A', (90, 'Arun')), ('B', (70, 'Bala')), ('B', (85, 'Bala'))]</pre></div></div>
+
+  <div class="pair"><div class="code"><span class="tag">Average per key (analytic favourite)</span><pre>avg = (marks.mapValues(lambda v: (v, 1))
+             .reduceByKey(lambda a, b: (a[0] + b[0], a[1] + b[1]))
+             .mapValues(lambda t: t[0] / t[1]))
+print(avg.collect())</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>[('A', 85.0), ('B', 77.5)]</pre></div></div>
+  <p class="small">The trick: carry (sum, count) through reduceByKey and divide at the end. This is the same idea as the MapReduce combiner trap.</p>
+
+  <h3>Persistence and caching</h3>
+  <p>If the same RDD is used by several actions, Spark recomputes it each time from lineage. <code>rdd.cache()</code> (MEMORY_ONLY) or <code>rdd.persist(level)</code> keeps it after the first computation.</p>
+  <div class="tbl"><table>
+    <tr><th>Storage level</th><th>Meaning</th></tr>
+    <tr><td>MEMORY_ONLY</td><td>Deserialized objects in RAM. Partitions that don't fit are recomputed. Default for <code>cache()</code></td></tr>
+    <tr><td>MEMORY_AND_DISK</td><td>RAM first, with overflow spilled to disk</td></tr>
+    <tr><td>MEMORY_ONLY_SER</td><td>Serialized in RAM. Uses less space but more CPU</td></tr>
+    <tr><td>MEMORY_AND_DISK_SER</td><td>Serialized, with spill to disk</td></tr>
+    <tr><td>DISK_ONLY</td><td>Disk only</td></tr>
+  </table></div>
+  <div class="pair"><div class="code"><span class="tag">PySpark: cache, then format and save</span><pre>from pyspark import StorageLevel
+rdd = sc.parallelize([("John", 85), ("Anu", 90)])
+rdd.persist(StorageLevel.MEMORY_AND_DISK)      # or rdd.cache()
+csv = rdd.map(lambda x: x[0] + "," + str(x[1]))
+print(csv.collect())
+csv.saveAsTextFile("output")</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>['John,85', 'Anu,90']
+# saveAsTextFile creates folder output/ containing part-00000, part-00001, _SUCCESS</pre></div></div>
+
+  <h3>DataFrames (structured API)</h3>
+  <div class="pair"><div class="code"><span class="tag">PySpark</span><pre>from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("Marks").getOrCreate()
+df = spark.createDataFrame(
+    [("Arun", "CSE", 85), ("Priya", "IT", 90), ("Ravi", "CSE", 75)],
+    ["name", "dept", "marks"])
+df.show()
+df.filter(df.marks &gt; 80).select("name").show()
+df.groupBy("dept").avg("marks").show()</pre></div>
+  <div class="out"><span class="tag">Output</span><pre>+-----+----+-----+
+| name|dept|marks|
++-----+----+-----+
+| Arun| CSE|   85|
+|Priya|  IT|   90|
+| Ravi| CSE|   75|
++-----+----+-----+
+
++-----+
+| name|
++-----+
+| Arun|
+|Priya|
++-----+
+
++----+----------+
+|dept|avg(marks)|
++----+----------+
+| CSE|      80.0|
+|  IT|      90.0|
++----+----------+</pre></div></div>
+  <p class="small">PySpark DataFrame vs Pandas: a Spark DataFrame is distributed and lazy (optimised by Catalyst) and represents missing values as null. A Pandas DataFrame lives on a single machine, is evaluated eagerly, and uses NaN. The order of groupBy rows can vary.</p>
+
+  <h3>Spark vs Hadoop MapReduce</h3>
+  <div class="tbl"><table>
+    <tr><th>Point</th><th>Spark</th><th>MapReduce</th></tr>
+    <tr><td>Processing</td><td>In-memory</td><td>Disk-based (writes between stages)</td></tr>
+    <tr><td>Speed</td><td>Up to 100× faster in memory</td><td>Slower</td></tr>
+    <tr><td>Iterative / ML</td><td>Very good (cache)</td><td>Poor (each iteration is a new job)</td></tr>
+    <tr><td>Real-time</td><td>Yes (Streaming)</td><td>Batch only</td></tr>
+    <tr><td>Ease of use</td><td>High-level APIs in Python, Scala, Java, R and SQL</td><td>Verbose Java</td></tr>
+    <tr><td>Fault tolerance</td><td>RDD lineage (recompute)</td><td>Replication + re-execution</td></tr>
+    <tr><td>Execution model</td><td>DAG of many stages</td><td>Fixed Map → Reduce</td></tr>
+  </table></div>
+
+  <h3>MLlib in one breath (theory only)</h3>
+  <ul>
+    <li><strong>Transformer</strong>: has <code>transform()</code>, turning one DataFrame into another. Examples: Tokenizer, VectorAssembler, StandardScaler.</li>
+    <li><strong>Estimator</strong>: has <code>fit()</code>, which trains on data and produces a model (a Transformer). Examples: LogisticRegression, RandomForestClassifier, KMeans.</li>
+    <li><strong>Pipeline</strong>: chains stages, e.g. <code>Pipeline(stages=[indexer, assembler, model]).fit(train_df)</code>.</li>
+    <li>Tuning: ParamGridBuilder + CrossValidator. Evaluation: BinaryClassificationEvaluator (areaUnderROC).</li>
+  </ul>
+</section>
+
+<!-- ========================= ANALYTIC ========================= -->
+<section class="unit" id="analytic">
+  <div class="unit-head"><h2>Analytic questions</h2><span class="qtype">Conclusion is a must</span></div>
+
+  <div class="def"><b class="lbl">5-step template, use it for every analytic answer</b>
+    <p><strong>1. Problem understanding</strong>: restate the scenario in 2 lines and note the data size and type.<br>
+    <strong>2. Tool choice + reason</strong>: say which tool and why. Use the CAP, latency, batch vs real-time, and structured vs unstructured arguments.<br>
+    <strong>3. Design / approach</strong>: key-value design, row-key design, or the pipeline of steps.<br>
+    <strong>4. Code + sample output</strong>: small sample data, then the code, then the output.<br>
+    <strong>5. Conclusion</strong>: 2–3 lines with the answer, the insight and the recommendation. Never skip this.</p>
+  </div>
+
+  <div class="answer">
+    <h4>Q1. An e-commerce company has 2 TB of daily sales logs (region, product, amount). Find total sales per region. Which approach, and why?</h4>
+    <p><strong>Understanding:</strong> batch aggregation over very large data, grouped by region.</p>
+    <p><strong>Tool:</strong> Spark, or MapReduce on Hadoop. The data is too big for one machine, and the aggregation is a simple key-value job. Spark is preferred for speed (in-memory) and less code.</p>
+    <p><strong>Key-value design:</strong> Map emits <code>(region, amount)</code>. Shuffle groups by region. Reduce sums. A combiner is safe because sum is associative.</p>
+    <div class="pair"><div class="code"><span class="tag">PySpark · sample: South,500 / North,300 / South,200 / East,400 / North,100</span><pre>sales = sc.textFile("sales.csv").map(lambda l: l.split(","))
+total = sales.map(lambda r: (r[0], int(r[1]))).reduceByKey(lambda a, b: a + b)
+print(total.sortBy(lambda x: x[1], ascending=False).collect())</pre></div>
+    <div class="out"><span class="tag">Output</span><pre>[('South', 700), ('North', 400), ('East', 400)]</pre></div></div>
+    <div class="concl"><b>Conclusion</b>South has the highest sales (700). Spark's reduceByKey combines values locally before the shuffle, so it handles 2 TB efficiently. Spark is recommended over MapReduce for repeated daily runs.</div>
+  </div>
+
+  <div class="answer">
+    <h4>Q2. A bank and a social media app both need a database. Using the CAP theorem, which type should each choose?</h4>
+    <p><strong>Understanding:</strong> a network partition is unavoidable in a distributed system, so each must choose between C and A.</p>
+    <p><strong>Bank:</strong> wrong balances are unacceptable, so choose <strong>CP</strong> (e.g. HBase, MongoDB) or an ACID RDBMS. It is better to reject a request during a partition than return stale data.</p>
+    <p><strong>Social media:</strong> must always respond, and a few seconds of stale likes or posts is acceptable, so choose <strong>AP</strong> (e.g. Cassandra, DynamoDB) with eventual consistency and the BASE properties. The Facebook wall example shows exactly this.</p>
+    <div class="concl"><b>Conclusion</b>The bank needs consistency (CP/ACID) and social media needs availability (AP/BASE). No single choice is best everywhere, because CAP forces a trade-off based on what the business can tolerate.</div>
+  </div>
+
+  <div class="answer">
+    <h4>Q3. Design an HBase table for IoT sensors writing readings every second. Reads ask for "latest readings of sensor X".</h4>
+    <p><strong>Understanding:</strong> very heavy writes plus time-ordered reads per sensor.</p>
+    <p><strong>Problem:</strong> a row key like <code>timestamp</code> or a sequential key makes every write hit the last region, which is <strong>hotspotting</strong>.</p>
+    <p><strong>Design:</strong> row key = <code>salt#sensorId#reverseTimestamp</code>, where salt = hash(sensorId) % 10 spreads the writes and the reverse timestamp puts the latest reading first. Column families: <code>data</code> (temp, humidity) and <code>meta</code> (location). Enable a Bloom filter and Snappy compression.</p>
+    <div class="pair"><div class="code"><span class="tag">HBase shell</span><pre>create 'sensor', {NAME =&gt; 'data', VERSIONS =&gt; 1, COMPRESSION =&gt; 'SNAPPY', BLOOMFILTER =&gt; 'ROW'}, 'meta'
+put 'sensor', '3#S17#9223370278800000000', 'data:temp', '31.5'
+scan 'sensor', {FILTER =&gt; "PrefixFilter('3#S17#')", LIMIT =&gt; 1}</pre></div>
+    <div class="out"><span class="tag">Output</span><pre>ROW                         COLUMN+CELL
+ 3#S17#9223370278800000000  column=data:temp, timestamp=..., value=31.5
+1 row(s)</pre></div></div>
+    <div class="concl"><b>Conclusion</b>Salting removes write hotspots, and the reverse timestamp makes "latest reading" a single short prefix scan. HBase is suitable because it gives random real-time access on HDFS at a scale an RDBMS can't handle.</div>
+  </div>
+
+  <div class="answer">
+    <h4>Q4. Using Pig, find the number of employees in each city and identify the city with the most employees.</h4>
+    <div class="pair"><div class="code"><span class="tag">emp.txt: 1,Arun,Chennai / 2,Priya,Madurai / 3,Ravi,Chennai / 4,Divya,Kochi / 5,Meena,Chennai</span><pre>emp  = LOAD 'emp.txt' USING PigStorage(',') AS (id:int, name:chararray, city:chararray);
+g    = GROUP emp BY city;
+cnt  = FOREACH g GENERATE group AS city, COUNT(emp) AS total;
+srt  = ORDER cnt BY total DESC;
+top1 = LIMIT srt 1;
+DUMP srt;
+DUMP top1;</pre></div>
+    <div class="out"><span class="tag">Output</span><pre>(Chennai,3)
+(Kochi,1)
+(Madurai,1)
+
+(Chennai,3)</pre></div></div>
+    <div class="concl"><b>Conclusion</b>Chennai has the most employees (3 of 5, 60%). Pig did this in 6 lines, where Java MapReduce would need far more code, because GROUP + COUNT does the shuffle and reduce internally.</div>
+  </div>
+
+  <div class="answer">
+    <h4>Q5. A data science team runs a machine-learning algorithm that loops over the same data 50 times. Should they use MapReduce or Spark?</h4>
+    <p><strong>Analysis:</strong> MapReduce writes to HDFS after every job, so 50 iterations means 50 rounds of disk reads and writes. Spark can <code>cache()</code> the data set in memory once and reuse it in every iteration. Lineage still gives fault tolerance.</p>
+    <div class="pair"><div class="code"><span class="tag">PySpark sketch</span><pre>data = sc.textFile("points.txt").map(parse).cache()   # read once, keep in RAM
+for i in range(50):
+    w = data.map(lambda p: gradient(p, w)).reduce(lambda a, b: a + b)</pre></div></div>
+    <div class="concl"><b>Conclusion</b>Spark is the better choice, often 10–100× faster for iterative workloads, because cached RDDs avoid repeated disk I/O. MapReduce suits only simple one-pass batch jobs.</div>
+  </div>
+
+  <div class="answer">
+    <h4>Q6. Given student marks per department, find the average, the topper's mark, and which department performs best (Scala).</h4>
+    <div class="pair"><div class="code"><span class="tag">Scala</span><pre>val data = List(("CSE", 80), ("CSE", 90), ("IT", 70), ("IT", 95), ("ECE", 60))
+val byDept = data.groupBy(_._1)
+val avg = byDept.map { case (d, l) =&gt; (d, l.map(_._2).sum.toDouble / l.size) }
+println(avg.toList.sortBy(-_._2))
+println(data.map(_._2).max)</pre></div>
+    <div class="out"><span class="tag">Output</span><pre>List((CSE,85.0), (IT,82.5), (ECE,60.0))
+95</pre></div></div>
+    <div class="concl"><b>Conclusion</b>CSE has the highest average (85.0) even though the single topper (95) is in IT. Averages describe overall department performance better than one top score, so CSE performs best.</div>
+  </div>
+</section>
+
+<!-- ========================= LAST HOUR ========================= -->
+<section class="unit" id="lasthour">
+  <div class="unit-head"><h2>Last-hour sheet</h2><span class="qtype">Revise before the exam</span></div>
+  <div class="grid2">
+    <div class="card"><h4>Hadoop / MapReduce</h4><ul class="small">
+      <li>HDFS: NameNode (metadata), DataNode (blocks), 128 MB blocks, replication 3</li>
+      <li>Secondary NN = checkpoint, not a backup</li>
+      <li>YARN: RM, NM, AM, Container</li>
+      <li>map (k1,v1) → list(k2,v2); reduce (k2,list(v2)) → list(k3,v3)</li>
+      <li>RecordReader key = byte offset, value = line</li>
+      <li>Partitioner = hash(key) % R. Shuffle groups and sorts</li>
+      <li>Combiner works for sum/max, NOT average</li>
+    </ul></div>
+    <div class="card"><h4>Pig</h4><ul class="small">
+      <li>Yahoo, data-flow, procedural, compiled to MR</li>
+      <li>Atom, Tuple ( ), Bag { }, Map [k#v]</li>
+      <li>LOAD … USING PigStorage(',') AS (…)</li>
+      <li>FILTER BY x == v; FOREACH … GENERATE</li>
+      <li>GROUP gives (group, {bag}); COGROUP = many relations</li>
+      <li>JOIN LEFT / RIGHT / FULL OUTER; CROSS; UNION; SPLIT … IF</li>
+      <li>DUMP, DESCRIBE, EXPLAIN, ILLUSTRATE</li>
+      <li>Word count = FLATTEN(TOKENIZE), GROUP, COUNT</li>
+    </ul></div>
+    <div class="card"><h4>NoSQL</h4><ul class="small">
+      <li>KV (Redis), Column (HBase), Document (MongoDB), Graph (Neo4j)</li>
+      <li>CAP: pick 2. CP = HBase/Mongo, AP = Cassandra/Couch, CA = RDBMS</li>
+      <li>BASE = Basically Available, Soft state, Eventual consistency</li>
+      <li>ACID: vertical scaling, strong consistency. BASE: horizontal, weak</li>
+      <li>Sharding divides data, replication copies it</li>
+    </ul></div>
+    <div class="card"><h4>HBase</h4><ul class="small">
+      <li>Column-oriented, on HDFS, BigTable model, random real-time R/W</li>
+      <li>HMaster, RegionServer, ZooKeeper (META location)</li>
+      <li>Write: WAL → MemStore → flush → HFile → compaction</li>
+      <li>Read: BlockCache → MemStore → HFile</li>
+      <li>Minor compaction merges some files. Major merges all and drops deletes</li>
+      <li>create / put / get / scan / count / delete / deleteall / disable / drop</li>
+      <li>SingleColumnValueFilter returns whole rows; ValueFilter returns matching cells</li>
+      <li>Hotspotting is fixed by salting or hash keys. Bloom filter: "definitely not" or "maybe"</li>
+    </ul></div>
+    <div class="card"><h4>Scala</h4><ul class="small">
+      <li>Odersky 2003, OOP + FP, JVM, static typing + type inference</li>
+      <li>val immutable, var mutable</li>
+      <li>1 to 5 includes 5; 1 until 5 excludes 5; do-while runs at least once</li>
+      <li>Closure uses an outer variable. A higher-order function takes or returns functions</li>
+      <li>fold(0) gives 15; partition vs span; map/reduce gives 55</li>
+      <li>match … case _ =&gt; default; head :: tail</li>
+      <li>@tailrec: recursive call last, uses an accumulator</li>
+    </ul></div>
+    <div class="card"><h4>Spark</h4><ul class="small">
+      <li>In-memory, up to 100× faster than MR. Core, SQL, Streaming, MLlib, GraphX</li>
+      <li>RDD: immutable, partitioned, fault-tolerant via lineage</li>
+      <li>Driver → Cluster Manager → Executors. Job → Stage → Task (one per partition)</li>
+      <li>Transformations are lazy; actions trigger the DAG</li>
+      <li>Narrow (map, filter) vs wide (reduceByKey, join): wide causes a shuffle and a new stage</li>
+      <li>reduceByKey is better than groupByKey (local combine)</li>
+      <li>Word count: flatMap → map (w,1) → reduceByKey → collect</li>
+    </ul></div>
+  </div>
+  <div class="tip"><b class="lbl">In the exam hall</b>
+    <p>Write the sample input before any program. Box your outputs. Draw at least one diagram per theory answer: HDFS, MR flow, HBase write path, or Spark architecture. End every analytic answer with a labelled <strong>Conclusion</strong>.</p>
+  </div>
+</section>
+
+<footer>Made from your L18–L27 slides (Pig Latin 1–3, NoSQL, HBase intro, commands and advanced, Scala, Spark, PySpark guide). Hadoop and MapReduce are from standard syllabus material. Outputs marked "order may vary" depend on the cluster.</footer>
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('quizbtn');
+  function setQuiz(on){
+    document.body.classList.toggle('quiz', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.textContent = on ? 'Show outputs' : 'Hide outputs';
+    if(!on){ document.querySelectorAll('.out.shown').forEach(function(o){ o.classList.remove('shown'); }); }
+    try { localStorage.setItem('bda-quiz', on ? '1' : '0'); } catch(e) {}
+  }
+  var saved = false;
+  try { saved = localStorage.getItem('bda-quiz') === '1'; } catch(e) {}
+  setQuiz(saved);
+  btn.addEventListener('click', function(){ setQuiz(!document.body.classList.contains('quiz')); });
+  document.addEventListener('click', function(e){
+    if(!document.body.classList.contains('quiz')) return;
+    var o = e.target.closest('.out');
+    if(o) o.classList.toggle('shown');
+  });
+})();
+</script>
+
+</body></html>
